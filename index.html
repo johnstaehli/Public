@@ -491,6 +491,37 @@ function showTab(tab) {
 applyFilters();
 renderPurchases();
 renderEvolution();
+
+// === Search patch: My Purchases tab ===
+(function() {
+  window._filterPurchases = function(q) {
+    q = (q || '').trim().toLowerCase();
+    if (!q) { renderPurchases(); return; }
+    const backup = PURCHASES.slice();
+    const filtered = backup.filter(p =>
+      [p.wine, p.producer, p.appellation, String(p.vintage || ''), p.note || '']
+        .some(f => (f || '').toLowerCase().includes(q))
+    );
+    PURCHASES.splice(0, PURCHASES.length, ...filtered);
+    renderPurchases();
+    PURCHASES.splice(0, PURCHASES.length, ...backup);
+  };
+  const _af = window.applyFilters;
+  window.applyFilters = function() {
+    _af();
+    const pt = document.getElementById('tab-purchases');
+    if (pt && pt.style.display !== 'none') {
+      window._filterPurchases(document.getElementById('search').value);
+    }
+  };
+  const _st = window.showTab;
+  window.showTab = function(tab) {
+    _st(tab);
+    if (tab === 'purchases') {
+      window._filterPurchases(document.getElementById('search').value);
+    }
+  };
+})();
 </script>
 </body>
 </html>
