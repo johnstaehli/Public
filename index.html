@@ -611,7 +611,7 @@ renderEvolution();
       if (o) o.parentNode.removeChild(o);
       var t = document.createElement('div');
       t.innerHTML = _summaryBar(sorted, by);
-      tab.insertBefore(t.firstChild, tab.firstChild);
+      var wrap = tab.querySelector('.pur-table-wrap') || tab; wrap.insertBefore(t.firstChild, wrap.firstChild);
     }
   };
 })();
