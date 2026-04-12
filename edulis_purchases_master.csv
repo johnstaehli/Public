@@ -1,21 +1,21 @@
 Order_Date,Wine,Producer,Appellation,Vintage,Qty_Bottles,Price_Per_Bottle_CHF,Order_Note
-2026-04-07,Beaucastel,Château de Beaucastel,Châteauneuf-du-Pape Rouge,2009,6,69.00,Une caisse de 2009 si c'est encore po
-2026-03-18,Banneret,Domaine du BANNERET,Châteauneuf du Pape Rouge,2022,6,49.00,6 pour moi
-2026-02-05,Armagnac Château de Laubade,Chateau de LAUBADE,Armagnac,1976,1,150.00,une pour moi
-2026-01-08,LADOUCETTE,LADOUCETTE,Pouilly Fumé,2024,12,26.00,un carton pour moi
-2025-11-22,Côte Rôtie Champin Le Seigneur,JM Gérin,Côte-Rôtie,2023,6,39.00,Une fois pour moi si c'est toujo
+2026-04-07,Beaucastel,ChÃ¢teau de Beaucastel,ChÃ¢teauneuf-du-Pape Rouge,2009,6,69.00,Une caisse de 2009 si c'est encore po
+2026-03-18,Banneret,Domaine du BANNERET,ChÃ¢teauneuf du Pape Rouge,2022,6,49.00,6 pour moi
+2026-02-05,Armagnac ChÃ¢teau de Laubade,Chateau de LAUBADE,Armagnac,1976,1,150.00,une pour moi
+2026-01-08,LADOUCETTE,LADOUCETTE,Pouilly FumÃ©,2024,12,26.00,un carton pour moi
+2025-11-22,CÃ´te RÃ´tie Champin Le Seigneur,JM GÃ©rin,CÃ´te-RÃ´tie,2023,6,39.00,Une fois pour moi si c'est toujo
 2025-11-15,BIANCO ROVERE,Brivio,Ticino,2023,12,26.00,Un carton pour moi svp.
-2025-10-24,CLOS des PAPES,Clos des Papes,Châteauneuf du Pape,2023,6,59.00,Est-ce qu'il vous en reste 6?
-2025-09-09,Champagne BILLECART-SALMON Brut Réserve,Champagne BILLECART-SALMON,Champagne,NV,12,35.00,est-ce que je peux avoir 12 b
+2025-10-24,CLOS des PAPES,Clos des Papes,ChÃ¢teauneuf du Pape,2023,6,59.00,Est-ce qu'il vous en reste 6?
+2025-09-09,Champagne BILLECART-SALMON Brut RÃ©serve,Champagne BILLECART-SALMON,Champagne,NV,12,35.00,est-ce que je peux avoir 12 b
 2025-07-12,BILLECART-SALMON Brut Reserve,Champagne BILLECART-SALMON,Champagne,NV,3,86.00,j'en prendrais volontiers 3 bou
 2025-06-14,Bergerie de l'Arcade,Domaine La Bergerie de l'Arcade,Languedoc Rouge,2022,6,79.00,Une caisse pour moi svp.
 2025-05-16,Billecart Salmon Brut,Champagne BILLECART-SALMON,Champagne,NV,,unclear,Non
 2025-04-13,Morgon Corcelette,Jean Foillard,Morgon,2021,6,28.00,Est-ce que je peux avoir 6 et 6
-2025-03-26,Côte Rôtie Brune et Blonde,Guigal,Côte Rôtie,2019,6,47.00,les 6 Guigal si c'est encore poss
-2025-03-10,By OTT Rosé,By OTT,Côtes de Provence,2024,18,12.90,je suis preneur
+2025-03-26,CÃ´te RÃ´tie Brune et Blonde,Guigal,CÃ´te RÃ´tie,2019,6,47.00,les 6 Guigal si c'est encore poss
+2025-03-10,By OTT RosÃ©,By OTT,CÃ´tes de Provence,2024,18,12.90,je suis preneur
 2025-01-29,ALION,Bodegas ALION,Ribera del Duero,2020,6,59.00,un carton pour moi svp
 2024-12-23,Billecart Salmon Brut,Champagne BILLECART-SALMON,Champagne,NV,,unclear,Et bonne saison festive.
-2024-08-14,JP Jamet Côte-Rôtie,Jean-Paul Jamet,Côte-Rôtie,2021,1,unclear,un magnum de Côte rôtie de Jamet
+2024-08-14,JP Jamet CÃ´te-RÃ´tie,Jean-Paul Jamet,CÃ´te-RÃ´tie,2021,1,unclear,un magnum de CÃ´te rÃ´tie de Jamet
 2024-08-14,Dard & Ribo St Joseph,Dard & Ribo,Saint-Joseph,2021,1,89.00,un magnum de St Joseph de Dard
 2024-06-19,Joseph Drouhin Beaune Clos des Mouches Blanc,Joseph Drouhin,Beaune,2020,2,139.00,les deux clos des mouches si c'e
 2024-05-30,,,2014,,,merci beaucoup. Je vous tiens au,
@@ -23,42 +23,42 @@ Order_Date,Wine,Producer,Appellation,Vintage,Qty_Bottles,Price_Per_Bottle_CHF,Or
 2024-02-02,Guiberteau Saumur Rouge,Domaine Guiberteau,Saumur,2021,6,28.00,J'aimerai 6 Guiberteau rouge svp
 2023-12-16,Auxey-Duresses Blanc,Domaine A. Paquet,Auxey-Duresses,2021,6,37.00,6 pour moi svp
 2023-10-18,Chartreuse VEP Verte,Chartreuse,Chartreuse,2020,1,365.00,1x la verte pour moi svp
-2023-08-19,BY.Ott Rosé,By OTT,Côtes de Provence,2021,,unclear,Je me demandais si il vous reste
-2023-08-17,CONDRIEU,Guigal,Condrieu,2019,6,37.00,6x pour moi s'il vous plaît
+2023-08-19,BY.Ott RosÃ©,By OTT,CÃ´tes de Provence,2021,,unclear,Je me demandais si il vous reste
+2023-08-17,CONDRIEU,Guigal,Condrieu,2019,6,37.00,6x pour moi s'il vous plaÃ®t
 2023-07-28,Auxey-Duresses Blanc,Domaine A. Paquet,Auxey-Duresses,2021,6,39.00,j'en predns volontier 6.
 2023-06-09,CHANDON Garden SPRITZ,Chandon,Argentina,NV,12,19.00,Si il vous en reste
 2023-05-30,Suntory Whisky Box,Suntory,Japan,NV,1,95.00,Une fois pour moi svp
-2023-04-04,Côte Rôtie Champin Le Seigneur,JM Gérin,Côte-Rôtie,2020,6,49.00,6x pour moi svp
+2023-04-04,CÃ´te RÃ´tie Champin Le Seigneur,JM GÃ©rin,CÃ´te-RÃ´tie,2020,6,49.00,6x pour moi svp
 2023-03-11,Brunello di Montalcino Pian Delle Vigne,ANTINORI,Brunello di Montalcino,2017,6,44.00,6 pour moi
-2023-03-02,CLOS des PAPES,Clos des Papes,Châteauneuf du Pape,2021,6,56.00,une fois 6 si c'est encore possibl
+2023-03-02,CLOS des PAPES,Clos des Papes,ChÃ¢teauneuf du Pape,2021,6,56.00,une fois 6 si c'est encore possibl
 2023-02-02,CLOS DES MOUCHES Blanc,Joseph Drouhin,Beaune 1er Cru,2020,,149.00,Il vous reste du blanc de clos d
-2023-01-21,LA REINE DES BOIS,Domaine de la Mordorée,Châteauneuf du Pape,2018,6,49.95,6 pour moi svp. Bon week-end
-2022-12-20,Auxey-Duresses Les Hoz Blanc,Agnès Paquet,Auxey-Duresses,2020,6,37.00,6x Auxey Duresse blank c'est po
+2023-01-21,LA REINE DES BOIS,Domaine de la MordorÃ©e,ChÃ¢teauneuf du Pape,2018,6,49.95,6 pour moi svp. Bon week-end
+2022-12-20,Auxey-Duresses Les Hoz Blanc,AgnÃ¨s Paquet,Auxey-Duresses,2020,6,37.00,6x Auxey Duresse blank c'est po
 2022-12-18,YACOCHUYA Malbec Michel Rolland,Yacochuya,Cafayate,2014,4,59.90,4 pour moi
-2022-09-23,CLOS des PAPES Magnum,Clos des Papes,Châteauneuf du Pape,2020,1,139.00,une de chaque pour moi du coups
-2022-09-23,VIEUX-TELEGRAPHE Magnum,Domaine du Vieux Telegraphe,Châteauneuf du Pape,2020,1,139.00,une de chaque pour moi du coups
-2022-09-13,AUXEY-DURESSES Les Hoz Rouge,Agnès Paquet,Auxey-Duresses,2020,6,37.00,j'aimerai vous en prendre 6 s'il
-2022-08-11,BEAUCASTEL,Château de Beaucastel,Châteauneuf du Pape,2019,6,69.00,je vous prends volontiers 6x Bea
+2022-09-23,CLOS des PAPES Magnum,Clos des Papes,ChÃ¢teauneuf du Pape,2020,1,139.00,une de chaque pour moi du coups
+2022-09-23,VIEUX-TELEGRAPHE Magnum,Domaine du Vieux Telegraphe,ChÃ¢teauneuf du Pape,2020,1,139.00,une de chaque pour moi du coups
+2022-09-13,AUXEY-DURESSES Les Hoz Rouge,AgnÃ¨s Paquet,Auxey-Duresses,2020,6,37.00,j'aimerai vous en prendre 6 s'il
+2022-08-11,BEAUCASTEL,ChÃ¢teau de Beaucastel,ChÃ¢teauneuf du Pape,2019,6,69.00,je vous prends volontiers 6x Bea
 2022-07-07,unclear,unclear,unclear,unclear,,,
-2022-06-28,AUXEY-DURESSES Blanc Les Hoz,Agnès Paquet,Auxey-Duresses,2020,6,37.00,une caisse de 6 pour moi si poss
-2022-06-09,BY.OTT Rosé,Domaines Ott,Provence,2021,12,16.80,12 pour nous si c'est possible
+2022-06-28,AUXEY-DURESSES Blanc Les Hoz,AgnÃ¨s Paquet,Auxey-Duresses,2020,6,37.00,une caisse de 6 pour moi si poss
+2022-06-09,BY.OTT RosÃ©,Domaines Ott,Provence,2021,12,16.80,12 pour nous si c'est possible
 2022-05-06,MORGON sans souffre,Domaine Lapierre,Beaujolais,2018,6,35.00,6 Morgon de Lapierre
 2022-05-06,CLOS DES FEES,Herve Bizeul,Languedoc,2017,6,44.00,6 Morgon de Lapierre
 2022-05-02,unclear,unclear,unclear,unclear,,,
 2022-04-01,unclear,unclear,unclear,unclear,,,
-2022-01-27,AUXEY-DURESSES Rouge,Agnès Paquet,Auxey-Duresses,2019,6,29.00,J'aimerai vous en prendre 6 svp
-2022-01-17,LE CLOS DES FEES,Herve Bizeul,Côtes du Roussillon,2018,6,45.00,je vous prends 6 clos des fées svp
+2022-01-27,AUXEY-DURESSES Rouge,AgnÃ¨s Paquet,Auxey-Duresses,2019,6,29.00,J'aimerai vous en prendre 6 svp
+2022-01-17,LE CLOS DES FEES,Herve Bizeul,CÃ´tes du Roussillon,2018,6,45.00,je vous prends 6 clos des fÃ©es svp
 2021-12-06,BEAUNE CLOS DES MOUCHES BLANC,Joseph Drouhin,Beaune 1er Cru,2019,3,125.00,OK
-2021-11-19,PEYRE ROSE Marlène n°3,Peyre Rose,Languedoc,2011,6,66.00,J'aimerai 6x Marlene
+2021-11-19,PEYRE ROSE MarlÃ¨ne nÂ°3,Peyre Rose,Languedoc,2011,6,66.00,J'aimerai 6x Marlene
 2021-11-19,PEYRE ROSE Les Cistes,Peyre Rose,Languedoc,2011,6,66.00,J'aimerai 6x Marlene
 2021-11-19,DOMAINE TEMPIER Rouge,Domaine Tempier,Bandol,2019,6,30.00,J'aimerai 6x Marlene
-2021-10-28,CLOS DES FEES Magnum,Herve Bizeul,Côtes du Roussillon,2015,3,96.00,J'aimerai vous prendre 3 clos des
+2021-10-28,CLOS DES FEES Magnum,Herve Bizeul,CÃ´tes du Roussillon,2015,3,96.00,J'aimerai vous prendre 3 clos des
 2021-10-22,PINOT NOIR Gian Battista,Weinbau von Tscharner,Grisons,2018,,49.00,J'aimerai en prendre 6 s'il-vous
 2021-09-22,THE YAMAZAKI,Suntory,Japan,unclear,,115.00,3 Yamazaki
-2021-11-19,PEYRE ROSE Marlène n°3,Peyre Rose,Languedoc,2011,6,66.0,J'aimerai 6x Marlene
+2021-11-19,PEYRE ROSE MarlÃ¨ne nÂ°3,Peyre Rose,Languedoc,2011,6,66.0,J'aimerai 6x Marlene
 2021-11-19,PEYRE ROSE Les Cistes,Peyre Rose,Languedoc,2011,6,66.0,J'aimerai 6x Marlene
 2021-11-19,DOMAINE TEMPIER Rouge,Domaine Tempier,Bandol,2019,6,30.0,J'aimerai 6x Marlene
-2021-10-28,CLOS DES FEES Magnum,Herve Bizeul,Côtes du Roussillon,2015,3,96.0,J'aimerai vous prendre 3 clos des
+2021-10-28,CLOS DES FEES Magnum,Herve Bizeul,CÃ´tes du Roussillon,2015,3,96.0,J'aimerai vous prendre 3 clos des
 2021-10-22,unclear,unclear,unclear,unclear,,,J'aimerai en prendre 6 s'il-vous
 2021-09-22,THE YAMAZAKI,Suntory,Japan,unclear,,115.0,3 Yamazaki
 2021-03-21,Brunello di Montalcino,Valdicava,Toscana,2015,6,69.0,Une fois 6 bouteilles pour moi svp
@@ -66,70 +66,70 @@ Order_Date,Wine,Producer,Appellation,Vintage,Qty_Bottles,Price_Per_Bottle_CHF,Or
 2021-02-12,unclear,unclear,unclear,unclear,,,J'imagine qu'il ne vous reste plus de
 2021-02-08,GEVREY CHAMBERTIN Magnum,Arnaud Mortet,Gevrey-Chambertin,2017,3,119.0,1 box pour moi
 2020-12-18,ALION,Bodegas Alion,Ribera del Duero,2016,6,59.0,OK pour 6 bouteilles si c'est possi
-2020-11-21,LES PAGODES DE COS,Château Cos d'Estournel,St.-Estèphe,2012,12,39.5,Je vous en prends 12 svp
+2020-11-21,LES PAGODES DE COS,ChÃ¢teau Cos d'Estournel,St.-EstÃ¨phe,2012,12,39.5,Je vous en prends 12 svp
 2020-10-02,Domaine de TREVALLON Rouge,Domaine de Trevallon,Alpilles,2017,6,58.0,j'en aimerai 6
-2020-09-15,unclear,unclear,unclear,unclear,,,Le virement effectué ce jour
+2020-09-15,unclear,unclear,unclear,unclear,,,Le virement effectuÃ© ce jour
 2020-07-14,unclear,unclear,unclear,unclear,,,Pas de soucis
-2020-07-12,Rauzan Segla,Château RAUZAN-SEGLA,Margaux,2017,6,65.00,6x le Rauzan Segla et si vous voulez
-2020-07-01,Sociando-Mallet,Château SOCIANDO-MALLET,Haut-Médoc,2004,12,39.50,12x pour moi svp
-2020-06-14,Chasse-Spleen,Château Chasse-Spleen,Moulis,2019,12,25.30,12 bouteilles uniquement
-2020-04-25,Chasse-Spleen,Château CHASSE-SPLEEN,Moulis,2004,1,260.00,Un 2004
-2020-04-25,Chasse-Spleen,Château CHASSE-SPLEEN,Moulis,2005,1,320.00,J'avais commandé un 2004
-2020-04-23,Chasse-Spleen,Château CHASSE-SPLEEN,Moulis,2004,1,260.00,j'aimerai une 2004 s'il vous p
-2020-04-16,By.Ott,"Domaine Ott ""By OTT Rosé""",Côtes de Provence,2018,12,14.60,j'aimerai en prendre 12 svp
-2020-03-19,Clos des Papes,CLOS DES PAPES,Châteauneuf du Pape,2017,6,67.00,6 bouteilles pour moi si poss
+2020-07-12,Rauzan Segla,ChÃ¢teau RAUZAN-SEGLA,Margaux,2017,6,65.00,6x le Rauzan Segla et si vous voulez
+2020-07-01,Sociando-Mallet,ChÃ¢teau SOCIANDO-MALLET,Haut-MÃ©doc,2004,12,39.50,12x pour moi svp
+2020-06-14,Chasse-Spleen,ChÃ¢teau Chasse-Spleen,Moulis,2019,12,25.30,12 bouteilles uniquement
+2020-04-25,Chasse-Spleen,ChÃ¢teau CHASSE-SPLEEN,Moulis,2004,1,260.00,Un 2004
+2020-04-25,Chasse-Spleen,ChÃ¢teau CHASSE-SPLEEN,Moulis,2005,1,320.00,J'avais commandÃ© un 2004
+2020-04-23,Chasse-Spleen,ChÃ¢teau CHASSE-SPLEEN,Moulis,2004,1,260.00,j'aimerai une 2004 s'il vous p
+2020-04-16,By.Ott,"Domaine Ott ""By OTT RosÃ©""",CÃ´tes de Provence,2018,12,14.60,j'aimerai en prendre 12 svp
+2020-03-19,Clos des Papes,CLOS DES PAPES,ChÃ¢teauneuf du Pape,2017,6,67.00,6 bouteilles pour moi si poss
 2020-02-25,Gantenbein,GANTENBEIN,Pinot Noir Grisons,2016,6,99.00,une fois 6 bouteilles
-2020-01-15,Sociando-Mallet,Château SOCIANDO-MALLET,Haut-Medoc,2012,2,210.00,2x les 2012 pour moi s'il vou
-2020-01-14,Côte Rôtie Jamet,Jean-Paul Jamet,Côte Rôtie,2017,2,135.00,2 côtes rôties
+2020-01-15,Sociando-Mallet,ChÃ¢teau SOCIANDO-MALLET,Haut-Medoc,2012,2,210.00,2x les 2012 pour moi s'il vou
+2020-01-14,CÃ´te RÃ´tie Jamet,Jean-Paul Jamet,CÃ´te RÃ´tie,2017,2,135.00,2 cÃ´tes rÃ´ties
 2019-12-24,Morgon,M&C Lapierre,Morgon,2018,12,29.90,je vous en prends 12 s'il vous
 2019-12-07,Chartreuse Verte,Chartreuse,Verte VEP,,1 liter,154.00,Une VEP 1 litre pour moi si po
-2019-11-01,Châteauneuf-Box,Box Châteauneuf,Châteauneuf du Pape,2016,2,,
+2019-11-01,ChÃ¢teauneuf-Box,Box ChÃ¢teauneuf,ChÃ¢teauneuf du Pape,2016,2,,
 2019-10-03,St.-Joseph,Guigal,St.-Joseph Rouge,2016,12,19.90,j'aimerai vous prendre 12 boute
-2019-09-23,Clos des Papes,Le Clos des Papes,Châteauneuf du Pape,2016,1,185.00,C'est parfait pour moi
-2019-09-23,Clos des Papes,Le Clos des Papes,Châteauneuf du Pape,2017,1,155.00,un magnum de clos des papes
-2019-09-09,Domaine Charvin,DOMAINE CHARVIN,Châteauneuf du Pape,2016,6,39.00,j'aimerai 6 bouteilles svp
-2019-07-22,Château Trotte Vieille,Château Trotte Vieille,Saint-Émilion,2015,6,,
+2019-09-23,Clos des Papes,Le Clos des Papes,ChÃ¢teauneuf du Pape,2016,1,185.00,C'est parfait pour moi
+2019-09-23,Clos des Papes,Le Clos des Papes,ChÃ¢teauneuf du Pape,2017,1,155.00,un magnum de clos des papes
+2019-09-09,Domaine Charvin,DOMAINE CHARVIN,ChÃ¢teauneuf du Pape,2016,6,39.00,j'aimerai 6 bouteilles svp
+2019-07-22,ChÃ¢teau Trotte Vieille,ChÃ¢teau Trotte Vieille,Saint-Ãmilion,2015,6,,
 2019-07-15,Villa Sandi Prosecco,VILLA SANDI,"Prosecco ""Il Fresco""",,12,10.90,garder ma commande jusqu'au 1
 2019-07-13,Villa Sandi Prosecco,VILLA SANDI,"Prosecco ""Il Fresco""",,12,10.90,j'aimerai vous en commander 12
 2019-06-26,Beaune Clos des Mouches,Joseph Drouhin,Beaune 1er Cru Clos des Mouches,2016,3,105.00,3x clos des mouches blancs
-2019-05-30,Clos des Fées,LE CLOS DES FÉES,Côtes du Roussillon Village,2015,2,96.00,Deux magnums pour moi s'il-v
-2019-05-27,Château Trotte Vieille,Château Trotte Vieille,Saint-Émilion,2015,6,,
-2019-04-05,Côte Rôtie Guigal,Guigal,Côte Rôtie Brune & Blonde,2015,1,86.00,Ah pardon c'est jamais clair
-2019-04-05,Côte Rôtie Guigal,Guigal,Côte Rôtie Brune & Blonde,2015,1,86.00,je vous en prends une s'il vou
-2019-04-04,Magnum Poujeaux,Château POUJEAUX,Moulis-en-Médoc,2009,3,96.00,J'aimerai vous en prendre 3 du
-2019-01-22,Chasse-Spleen,Château CHASSE SPLEEN,Moulis,2015,1,64.00,je prendrai bine le chasseplee
-2019-01-22,Poujeaux,Château POUJEAUX,Moulis,2015,1,60.00,je prendrai bine le poujeaux
-2019-01-22,CHASSE SPLEEN,Château,Moulis,2015,2,64.00,Bonjour Si c'est encore possible je prendrai bien
-2019-01-22,POUJEAUX,Château,Moulis,2015,2,60.00,Bonjour Si c'est encore possible je prendrai bien
-2018-09-18,LE CLOS DES FÉES,Domaine Clos des Fées,Côtes du Roussillon Villages,2015,6,48.00,Bonjour j'aimerai vous en prendre 6
+2019-05-30,Clos des FÃ©es,LE CLOS DES FÃES,CÃ´tes du Roussillon Village,2015,2,96.00,Deux magnums pour moi s'il-v
+2019-05-27,ChÃ¢teau Trotte Vieille,ChÃ¢teau Trotte Vieille,Saint-Ãmilion,2015,6,,
+2019-04-05,CÃ´te RÃ´tie Guigal,Guigal,CÃ´te RÃ´tie Brune & Blonde,2015,1,86.00,Ah pardon c'est jamais clair
+2019-04-05,CÃ´te RÃ´tie Guigal,Guigal,CÃ´te RÃ´tie Brune & Blonde,2015,1,86.00,je vous en prends une s'il vou
+2019-04-04,Magnum Poujeaux,ChÃ¢teau POUJEAUX,Moulis-en-MÃ©doc,2009,3,96.00,J'aimerai vous en prendre 3 du
+2019-01-22,Chasse-Spleen,ChÃ¢teau CHASSE SPLEEN,Moulis,2015,1,64.00,je prendrai bine le chasseplee
+2019-01-22,Poujeaux,ChÃ¢teau POUJEAUX,Moulis,2015,1,60.00,je prendrai bine le poujeaux
+2019-01-22,CHASSE SPLEEN,ChÃ¢teau,Moulis,2015,2,64.00,Bonjour Si c'est encore possible je prendrai bien
+2019-01-22,POUJEAUX,ChÃ¢teau,Moulis,2015,2,60.00,Bonjour Si c'est encore possible je prendrai bien
+2018-09-18,LE CLOS DES FÃES,Domaine Clos des FÃ©es,CÃ´tes du Roussillon Villages,2015,6,48.00,Bonjour j'aimerai vous en prendre 6
 2018-04-16,HENDRICK'S Gin,Hendrick's,Gin (44% Alc.),1,2,115.00,Bonsoir j'aimerai vous commander deux bouteilles
-2017-08-11,PUECH HAUT Rouge,PUECH HAUT,St.-Drezery Cuvée Tête de Bélier,2015,3,62.00,Bonjour J'aimerai 3 magnums s'il vous plaît
-2017-02-16,PINOT NOIR Monolith,Domaine OBRECHT,Grisons,2014,6,89.00,Bonjour 6 pour moi s'il vous plaît
+2017-08-11,PUECH HAUT Rouge,PUECH HAUT,St.-Drezery CuvÃ©e TÃªte de BÃ©lier,2015,3,62.00,Bonjour J'aimerai 3 magnums s'il vous plaÃ®t
+2017-02-16,PINOT NOIR Monolith,Domaine OBRECHT,Grisons,2014,6,89.00,Bonjour 6 pour moi s'il vous plaÃ®t
 2017-02-13,YACOCHUYA,YACOCHUYA Malbec,Cafayate Calchaquies Valley,2008,6,29.80,Bonsoir J'aimerai vous en prendre 6 svp
 2017-02-02,GEVREY CHAMBERTIN,JL Trapet,Gevrey Chambertin,2014,3,122.00,Bonjour j'aimerai vous commander 3 magnums svp
-2016-07-19,CLOS DES PAPES,Clos des Papes,Châteauneuf du Pape,2014,6,53.00,OK alors une caisse Merci
-2016-05-11,CLOS DES PAPES,Clos des Papes,Châteauneuf du Pape Rouge,2014,4,99.00,Alors 4 Merci
-2016-05-10,CHASSE SPLEEN,Château Chasse Spleen,Moulis,2015,4,47.50,Bonjour J'aimerai 2x magnums de Chasse-Spleen
-2016-05-10,POUJEAUX,Château Poujeaux,Moulis,2015,4,48.20,Bonjour J'aimerai 2x magnums de Chasse-Spleen
-2016-05-03,GEVREY CHAMBERTIN,JL Trapet,Gevrey Chambertin,2011,6,45.00,Bonjour 6x pour moi s'il vous plaît
+2016-07-19,CLOS DES PAPES,Clos des Papes,ChÃ¢teauneuf du Pape,2014,6,53.00,OK alors une caisse Merci
+2016-05-11,CLOS DES PAPES,Clos des Papes,ChÃ¢teauneuf du Pape Rouge,2014,4,99.00,Alors 4 Merci
+2016-05-10,CHASSE SPLEEN,ChÃ¢teau Chasse Spleen,Moulis,2015,4,47.50,Bonjour J'aimerai 2x magnums de Chasse-Spleen
+2016-05-10,POUJEAUX,ChÃ¢teau Poujeaux,Moulis,2015,4,48.20,Bonjour J'aimerai 2x magnums de Chasse-Spleen
+2016-05-03,GEVREY CHAMBERTIN,JL Trapet,Gevrey Chambertin,2011,6,45.00,Bonjour 6x pour moi s'il vous plaÃ®t
 2015-08-28,REYNVAAN - FOOTHILLS Reserve Syrah,REYNVAAN,Columbia Valley,2012,6,59.00,Bonjour j'aimerai vous remercier pour
-2015-04-24,VIEUX TELEGRAPHE,Vieux Télégraphe,Châteauneuf du Pape Rouge,2012,6,52.00,Bonjour J'aimerai vous commander 6 bouteilles
-2015-02-16,POUJEAUX,Château Poujeaux,Moulis,2009,3,75.00,Génial je vais vous prendre 3 fois le 2009
+2015-04-24,VIEUX TELEGRAPHE,Vieux TÃ©lÃ©graphe,ChÃ¢teauneuf du Pape Rouge,2012,6,52.00,Bonjour J'aimerai vous commander 6 bouteilles
+2015-02-16,POUJEAUX,ChÃ¢teau Poujeaux,Moulis,2009,3,75.00,GÃ©nial je vais vous prendre 3 fois le 2009
 2015-02-16,GUIDALBERTO,Tenuta San Guido,Toscana,2011,6,25.50,si c'est toujours possible je suis preneur
 2014-08-22,Livraison,N/A,N/A,N/A,,N/A,Madame merci pour votre message
 2014-08-07,GUIDALBERTO,Tenuta San Guido,Toscana,2012,12,28.00,Bonjour J'aimerai vous en commander 12
-2014-04-24,VIEUX TELEGRAPHE,Vieux Télégraphe,Châteauneuf du Pape Rouge,2012,6,52.00,Bonjour J'aimerai vous commander 6 bouteilles
+2014-04-24,VIEUX TELEGRAPHE,Vieux TÃ©lÃ©graphe,ChÃ¢teauneuf du Pape Rouge,2012,6,52.00,Bonjour J'aimerai vous commander 6 bouteilles
 2014-01-10,LAURENT-PERRIER ROSE,Champagne Laurent-Perrier,Champagne,NV,12,53.00,Bonjour J'aimerai vous commander 12 bouteilles
 2013-11-01,VALDICAVA,VALDICAVA,Brunello di Montalcino Toscana,2007,6,59.00,Bonjour J'aimerai en commander 6 s'il
 2013-10-10,Facture ouverte,N/A,N/A,N/A,,N/A,C'est fait Meilleures salutations John
 2013-08-14,GLENMORANGIE Nectar d'Or,Glenmorangie,Whisky,12 Years Old,2,67.50,Bonjour Deux bouteilles pour moi svp
 2013-06-11,LE DIFESE,Tenuta San Guido,Toscana,2011,24,18.00,J'aimerai en commander 24 si c'est encore possible
-2013-02-26,VIEUX TELEGRAPHE,Vieux Télégraphe,Châteauneuf du Pape,2010,6,57.00,6 pour moi s'il vous plaît
+2013-02-26,VIEUX TELEGRAPHE,Vieux TÃ©lÃ©graphe,ChÃ¢teauneuf du Pape,2010,6,57.00,6 pour moi s'il vous plaÃ®t
 2013-02-14,GAMAY-MONDEUSE,JP Pellegrin,Domaine Grand'Cour,2011,2,14.00,Et hop alors deux monde s'est Merci
 2013-02-06,LAURENT-PERRIER ROSE,Champagne Laurent-Perrier,Champagne,NV,6,52.00,Bonjour J'aimerai 6 bouteilles Merci
-2012-12-19,TIGNANELLO,Tignanello,Toscana,2009,6,58.50,Bonsoir Je précise si il ya le stock
-2012-12-04,VIEUX TELEGRAPHE,Vieux Télégraphe,Châteauneuf du Pape,2010,6,56.00,Bonjour je suis intéressé par cette offre
-2012-12-04,VIEUX TELEGRAPHE,Vieux Télégraphe,Châteauneuf du Pape,2010,2,117.00,Bonjour je suis intéressé par cette offre
-2011-10-30,BILLECART SALMON Cuvée Nicolas-François,Billecart Salmon,Champagne,1998,6,39.50,Bonjour J'aimerai vous commander si possible
-2010-10-26,LAURENT-PERRIER ROSÉ,Champagne Laurent-Perrier,Champagne,NV,6,,Bonjour Christophe mes coordonnées sont les suivantes
-2010-10-24,LAURENT-PERRIER ROSÉ,Champagne Laurent-Perrier,Champagne,NV,6,,Madame Monsieur je suis intéressé par votre offre
+2012-12-19,TIGNANELLO,Tignanello,Toscana,2009,6,58.50,Bonsoir Je prÃ©cise si il ya le stock
+2012-12-04,VIEUX TELEGRAPHE,Vieux TÃ©lÃ©graphe,ChÃ¢teauneuf du Pape,2010,6,56.00,Bonjour je suis intÃ©ressÃ© par cette offre
+2012-12-04,VIEUX TELEGRAPHE,Vieux TÃ©lÃ©graphe,ChÃ¢teauneuf du Pape,2010,2,117.00,Bonjour je suis intÃ©ressÃ© par cette offre
+2011-10-30,BILLECART SALMON CuvÃ©e Nicolas-FranÃ§ois,Billecart Salmon,Champagne,1998,6,39.50,Bonjour J'aimerai vous commander si possible
+2010-10-26,LAURENT-PERRIER ROSÃ,Champagne Laurent-Perrier,Champagne,NV,6,,Bonjour Christophe mes coordonnÃ©es sont les suivantes
+2010-10-24,LAURENT-PERRIER ROSÃ,Champagne Laurent-Perrier,Champagne,NV,6,,Madame Monsieur je suis intÃ©ressÃ© par votre offre
