@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27#6B1A2A%27/%3E%3Cpath d=%27M7 5 L25 5 C25 5 21.5 14.5 19 16.5 C17.8 17.5 16 17.5 16 17.5 C16 17.5 14.2 17.5 13 16.5 C10.5 14.5 7 5 7 5 Z%27 fill=%27rgba(255,255,255,0.92)%27/%3E%3Cline x1=%2716%27 y1=%2717.5%27 x2=%2716%27 y2=%2725.5%27 stroke=%27white%27 stroke-width=%271.5%27 stroke-linecap=%27round%27 opacity=%270.92%27/%3E%3Cline x1=%2711%27 y1=%2727%27 x2=%2721%27 y2=%2727%27 stroke=%27white%27 stroke-width=%272.2%27 stroke-linecap=%27round%27 opacity=%270.92%27/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="favicon-wine.svg">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wine DB</title>
@@ -169,6 +169,22 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 .sr-detail td{padding:3px 8px 3px 0;vertical-align:top}
 #search-box{width:100%;padding:11px 16px 11px 42px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none}
 #search-box:focus{border-color:var(--accent)}
+.tabs-inner .tab:first-child{font-weight:700;font-size:13.5px;letter-spacing:0.1px}
+.search-hero{display:flex;flex-direction:column;align-items:center;padding:72px 20px 36px;transition:padding .3s}
+.search-hero.has-results{padding:20px 20px 10px}
+.search-hero-inner{max-width:640px;width:100%;text-align:center}
+.search-hero-title{font-size:26px;font-weight:700;color:var(--accent);letter-spacing:-.5px;margin-bottom:4px;transition:font-size .25s}
+.search-hero.has-results .search-hero-title{font-size:15px;margin-bottom:8px}
+.search-hero-sub{color:var(--muted);font-size:12px;margin-bottom:28px;transition:all .25s}
+.search-hero.has-results .search-hero-sub{opacity:0;max-height:0;margin:0;overflow:hidden}
+.search-wrap-outer{position:relative;width:100%}
+#search-box{width:100%;padding:14px 44px 14px 52px;font-size:16px;background:var(--card);border:2px solid var(--border);border-radius:12px;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s}
+#search-box:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
+.s-icon-l{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.s-clear{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;display:none;padding:4px 6px;border-radius:4px}
+.s-clear.vis{display:block}
+.s-clear:hover{color:var(--text)}
+#search-results{max-width:1200px;margin:0 auto;padding:0 20px 40px}
 </style>
 </head>
 <body>
@@ -198,16 +214,23 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 </div>
 
 
+
 <!-- SEARCH TAB -->
 <div id="tab-search">
-  <div style="max-width:1200px;margin:0 auto;padding:16px 20px">
-    <div style="position:relative;margin-bottom:14px">
-      <input id="search-box" type="text" placeholder="Search wines, producers, appellations, vintages, merchants…" autocomplete="off">
-      <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.45" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <div class="search-hero" id="search-hero">
+    <div class="search-hero-inner">
+      <div class="search-hero-title">Wine Cellar</div>
+      <div class="search-hero-sub">1430 wines &mdash; search by name, producer, appellation or vintage</div>
+      <div class="search-wrap-outer">
+        <svg class="s-icon-l" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-box" type="text" placeholder="e.g. rayas, burgundy 2020, rostaing…" autocomplete="off" spellcheck="false">
+        <button class="s-clear" id="s-clear" title="Clear">&#x2715;</button>
+      </div>
     </div>
-    <div id="search-results"></div>
   </div>
+  <div id="search-results"></div>
 </div>
+
 
 <!-- OFFERS TAB -->
 <div id="tab-offers">
@@ -794,7 +817,7 @@ function renderSearch(){
   if(!container)return;
   var q=_sq.trim();
   var wines=RAW.wines;
-  if(!q){container.innerHTML="<div style='padding:60px 20px;text-align:center'><div style='font-size:36px;margin-bottom:12px;opacity:.25'>&#127863;</div><div style='color:var(--muted);font-size:14px'>1430 wines — type to search</div></div>";return;}
+  var hero=document.getElementById("search-hero");var clr=document.getElementById("s-clear");if(!q){container.innerHTML="";if(hero)hero.classList.remove("has-results");if(clr)clr.classList.remove("vis");return;}if(hero)hero.classList.add("has-results");if(clr)clr.classList.add("vis");
 var filtered=wines.filter(function(w){return _matches(w,q);});
   filtered.sort(function(a,b){
     if(a.purchased!==b.purchased)return a.purchased?-1:1;
@@ -839,6 +862,8 @@ document.addEventListener("DOMContentLoaded",function(){
 (function(){
   var box=document.getElementById("search-box");
   if(box)box.addEventListener("input",function(){_sq=this.value;renderSearch();});
+  var clrBtn=document.getElementById("s-clear");
+  if(clrBtn)clrBtn.addEventListener("click",function(){_sq="";box.value="";box.focus();renderSearch();});
 })();
 if(typeof showTab==="function"){
   var _origST=showTab;
