@@ -770,7 +770,6 @@ function _merchant(hist){
 function _matches(w,q){
   if(!q)return true;
   var f=[w.wine||"",w.producer||"",w.appellation||"",String(w.vintage||"")];
-  (w.history||[]).forEach(function(h){f.push(h.subject||"");});
   var t=f.join(" ").toLowerCase();
   return q.toLowerCase().split(/\s+/).every(function(word){return t.indexOf(word)>-1;});
 }
