@@ -185,7 +185,8 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 .s-clear.vis{display:block}
 .s-clear:hover{color:var(--text)}
 #search-results{max-width:1200px;margin:0 auto;padding:0 20px 40px}
-.src-tag{font-size:10px;color:var(--muted);opacity:0.6;margin-left:5px;white-space:nowrap;font-style:normal;}
+.src-tag{font-size:10px;color:var(--muted);opacity:0.6;margin-left:5px;white-space:nowrap;}
+.pur-shop{font-size:11px;color:var(--gold);opacity:0.85;}
 </style>
 </head>
 <body>
@@ -37899,7 +37900,7 @@ function renderWines(wines) {
     const purRows = w.purchased && w.purchase_records.length ? 
       `<div class="pur-section"><div class="hist-title">Your Purchases</div>` +
       w.purchase_records.map(p => 
-        `<div class="pur-row"><span class="pur-date">${p.date}</span><span class="pur-qty">${p.qty} bt</span><span class="pur-price">CHF ${p.price.toFixed(0)}/bt</span><span class="pur-note">${p.note}</span></div>`
+        `<div class="pur-row"><span class="pur-date">${p.date}</span><span class="pur-shop">${p.shop||''}</span><span class="pur-qty">${p.qty} bt</span><span class="pur-price">CHF ${p.price.toFixed(0)}/bt</span><span class="pur-note">${p.note}</span></div>`
       ).join('') + '</div>' : '';
 
     return `<div class="wine-card" id="card-${i}">
@@ -38032,7 +38033,7 @@ function senderName(email) {
     'laroutedesblancs.com': 'La Route des Blancs',
     'caveroyale.ch': 'Cave Royale',
     'lepasseurdevin.ch': 'Le Passeur de Vin',
-    'qoqa.ch': 'Qoqa',
+    'qoqa.ch': 'Qoqa'
   };
   var domain = (email.split('@')[1] || '').toLowerCase();
   return SENDERS[domain] || domain;
