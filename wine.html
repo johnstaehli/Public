@@ -795,7 +795,8 @@ function renderSearch(){
   if(!container)return;
   var q=_sq.trim();
   var wines=RAW.wines;
-  var filtered=q?wines.filter(function(w){return _matches(w,q);}):wines.slice();
+  if(!q){container.innerHTML="<div style='padding:60px 20px;text-align:center'><div style='font-size:36px;margin-bottom:12px;opacity:.25'>&#127863;</div><div style='color:var(--muted);font-size:14px'>1430 wines — type to search</div></div>";return;}
+var filtered=wines.filter(function(w){return _matches(w,q);});
   filtered.sort(function(a,b){
     if(a.purchased!==b.purchased)return a.purchased?-1:1;
     return(a.wine||"").localeCompare(b.wine||"");
