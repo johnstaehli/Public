@@ -157,6 +157,18 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
   .header-inner { gap: 10px; }
   .logo span { display: none; }
 }
+.search-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 16px;background:var(--card);border-radius:8px;margin-bottom:6px;cursor:pointer;border:1px solid transparent;transition:border-color .15s}
+.search-row:hover{border-color:var(--border)}
+.search-row.sr-expanded{border-left:3px solid var(--accent)}
+.sr-main{flex:1;min-width:180px}
+.sr-name{display:flex;align-items:center;flex-wrap:wrap;gap:4px;font-weight:600}
+.sr-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.sr-detail{width:100%;padding:10px 0 4px;border-top:1px solid var(--border);margin-top:8px;font-size:12px}
+.sr-detail table{width:100%;border-collapse:collapse}
+.sr-detail th{text-align:left;padding:3px 8px 3px 0;color:var(--muted);font-weight:500;font-size:11px}
+.sr-detail td{padding:3px 8px 3px 0;vertical-align:top}
+#search-box{width:100%;padding:11px 16px 11px 42px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none}
+#search-box:focus{border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -174,7 +186,8 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 
 <div class="tabs">
   <div class="tabs-inner">
-    <div class="tab active" onclick="showTab('offers')">All Offers</div>
+    <div class="tab active" onclick="showTab('search')">Search</div>
+    <div class="tab" onclick="showTab('offers')">All Offers</div>
     <div class="tab" onclick="showTab('evolution')">Price Evolution</div>
     <div class="tab" onclick="showTab('purchases')">My Purchases</div>
   </div>
@@ -182,6 +195,18 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 
 <div class="stats-bar">
   <div class="stats-inner" id="stats-bar"></div>
+</div>
+
+
+<!-- SEARCH TAB -->
+<div id="tab-search">
+  <div style="max-width:1200px;margin:0 auto;padding:16px 20px">
+    <div style="position:relative;margin-bottom:14px">
+      <input id="search-box" type="text" placeholder="Search wines, producers, appellations, vintages, merchants…" autocomplete="off">
+      <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.45" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <div id="search-results"></div>
+  </div>
 </div>
 
 <!-- OFFERS TAB -->
@@ -708,6 +733,120 @@ renderEvolution();
       tab.insertBefore(t.firstChild, tab.firstChild);
     }
   };
+})();
+
+// ===== SEARCH TAB =====
+(function(){
+var _sq="",_expKey=null;
+function _spark(hist){
+  if(!hist||!hist.length)return"<span style='color:var(--muted)'>—</span>";
+  var pp=hist.map(function(h){return h.price;}).filter(function(p){return p!=null;});
+  if(pp.length<2){return"<svg width=80 height=28><circle cx=40 cy=14 r=3 fill='var(--accent)'/></svg>";}
+  var mn=Math.min.apply(null,pp),mx=Math.max.apply(null,pp),rng=mx-mn||1;
+  var W=80,H=28,pd=3;
+  var pts=pp.map(function(p,i){var x=pd+(i/(pp.length-1))*(W-pd*2);var y=H-pd-((p-mn)/rng)*(H-pd*2);return x.toFixed(1)+","+y.toFixed(1);});
+  var col=pp[pp.length-1]<=pp[0]?"var(--green)":"var(--red)";
+  var last=pts[pts.length-1].split(",");
+  return"<svg width=80 height=28 viewBox='0 0 80 28'><polyline points='"+pts.join(" ")+"'fill=none stroke='"+col+"' stroke-width=1.5 stroke-linejoin=round/><circle cx="+last[0]+" cy="+last[1]+" r=2.5 fill='"+col+"'/></svg>";
+}
+function _merchant(hist){
+  var seen={};
+  (hist||[]).forEach(function(h){
+    var s=(h.subject||"").toLowerCase();
+    var m="Other";
+    if(s.indexOf("edulis")>-1)m="Edulis";
+    else if(s.indexOf("carpe")>-1)m="Carpe Diem";
+    else if(s.indexOf("leman")>-1||s.indexOf("l\u00e9man")>-1)m="Vinoth. L\u00e9man";
+    else if(s.indexOf("saleve")>-1||s.indexOf("sal\u00e8ve")>-1)m="Cr\u00e9merie Sal\u00e8ve";
+    else if(s.indexOf("caratello")>-1||s.indexOf("gambero")>-1)m="Caratello";
+    else if(s.indexOf("lesvins")>-1||s.indexOf("vins d")>-1||s.indexOf("jullien")>-1)m="Les Vins";
+    else if(s.indexOf("royale")>-1)m="Cave Royale";
+    else if(s.indexOf("route des blancs")>-1)m="R. des Blancs";
+    else{var w=h.subject||"";m=w.replace(/[^a-zA-Z\u00C0-\u024F\s]/g,"").trim().substring(0,18);}
+    seen[m]=1;
+  });
+  return Object.keys(seen).slice(0,2).join(", ");
+}
+function _matches(w,q){
+  if(!q)return true;
+  var f=[w.wine||"",w.producer||"",w.appellation||"",String(w.vintage||"")];
+  (w.history||[]).forEach(function(h){f.push(h.subject||"");});
+  var t=f.join(" ").toLowerCase();
+  return q.toLowerCase().split(/\s+/).every(function(word){return t.indexOf(word)>-1;});
+}
+function _detail(w){
+  var hist=(w.history||[]).slice().reverse();
+  var rows=hist.map(function(h){
+    var dv=h.delta!=null?(h.delta>0?"<span style=color:var(--red)>+"+h.delta+"</span>":"<span style=color:var(--green)>"+h.delta+"</span>"):"—";
+    var src=(h.subject||"").substring(0,30)+(h.subject&&h.subject.length>30?"…":"");
+    return"<tr><td>"+h.date+"</td><td>"+(h.price!=null?"CHF "+h.price.toFixed(2):"—")+"</td><td>"+(h.list_price?"CHF "+h.list_price.toFixed(2):"—")+"</td><td>"+dv+"</td><td style=color:var(--muted)>"+src+"</td></tr>";
+  }).join("");
+  var ph="";
+  if(w.purchased&&w.purchase_records&&w.purchase_records.length){
+    var pr=w.purchase_records.map(function(p){
+      return"<tr style=color:var(--green)><td>"+(p.date||"")+"</td><td>"+(p.quantity||"")+" bt</td><td>CHF "+(p.price_paid!=null?p.price_paid.toFixed(2):"?")+"</td><td style=color:var(--muted)>"+(p.notes||"")+"</td></tr>";
+    }).join("");
+    ph="<div style=margin-top:12px><div style='font-size:11px;font-weight:700;color:var(--green);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px'>My Purchases</div><table><thead><tr style=color:var(--muted)><th>Date</th><th>Qty</th><th>Paid</th><th>Notes</th></tr></thead><tbody>"+pr+"</tbody></table></div>";
+  }
+  return"<table><thead><tr style=color:var(--muted)><th>Date</th><th>Price</th><th>List</th><th>&#916;</th><th>Source</th></tr></thead><tbody>"+rows+"</tbody></table>"+ph;
+}
+function renderSearch(){
+  var container=document.getElementById("search-results");
+  if(!container)return;
+  var q=_sq.trim();
+  var wines=RAW.wines;
+  var filtered=q?wines.filter(function(w){return _matches(w,q);}):wines.slice();
+  filtered.sort(function(a,b){
+    if(a.purchased!==b.purchased)return a.purchased?-1:1;
+    return(a.wine||"").localeCompare(b.wine||"");
+  });
+  if(!filtered.length){container.innerHTML="<div style='padding:40px;text-align:center;color:var(--muted)'>No results for \u201c"+q+"\u201d</div>";return;}
+  var html=filtered.map(function(w){
+    var key=(w.wine||"")+"||"+(w.vintage||"");
+    var expanded=_expKey===key;
+    var price=w.latest_price!=null?"CHF "+w.latest_price.toFixed(2):"—";
+    var badge=w.purchased?"<span style='background:var(--green);color:#000;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px'>OWNED</span>":"";
+    var mc=_merchant(w.history);
+    var oc=(w.offer_count||(w.history||[]).length)||1;
+    var det=expanded?"<div class=sr-detail>"+_detail(w)+"</div>":"";
+    var arr=expanded?"&#9650;":"&#9660;";
+    return"<div class='search-row"+(expanded?" sr-expanded":"")+"'data-key='"+key.replace(/'/g,"&apos;")+"'>"
+      +"<div class=sr-main><div class=sr-name>"+w.wine+"<span style='color:var(--muted);font-size:12px;margin-left:5px'>"+(w.vintage||"")+"</span>"+badge+"</div>"
+      +"<div style='font-size:12px;color:var(--muted);margin-top:2px'>"+(w.producer||"")+(w.appellation?" · "+w.appellation:"")+"</div></div>"
+      +"<div class=sr-right>"
+      +"<div style=text-align:right><div style='font-weight:600;color:var(--accent)'>"+price+"</div><div style='font-size:10px;color:var(--muted)'>"+(w.latest_date||"")+"</div></div>"
+      +"<div style='width:80px;display:flex;align-items:center'>"+_spark(w.history)+"</div>"
+      +"<div style='text-align:right;min-width:70px'><div style='font-size:11px;color:var(--muted)'>"+(mc||"—")+"</div><div style='font-size:10px;color:var(--muted)'>"+oc+" offer"+(oc!==1?"s":"")+"</div></div>"
+      +"<div style='color:var(--muted);font-size:12px;margin-left:6px'>"+arr+"</div></div>"
+      +det+"</div>";
+  }).join("");
+  html+="<div style='padding:16px;text-align:center;color:var(--muted);font-size:12px'>"+(q?filtered.length+" of "+wines.length+" wines matching \u201c"+q+"\u201d":filtered.length+" wines")+"</div>";
+  container.innerHTML=html;
+}
+window.renderSearch=renderSearch;
+document.addEventListener("click",function(e){
+  var row=e.target.closest(".search-row");
+  if(!row||!document.getElementById("tab-search").contains(row))return;
+  var key=row.getAttribute("data-key");
+  if(e.target.closest(".sr-detail"))return;
+  _expKey=(_expKey===key)?null:key;
+  renderSearch();
+});
+document.addEventListener("DOMContentLoaded",function(){
+  var box=document.getElementById("search-box");
+  if(box)box.addEventListener("input",function(){_sq=this.value;renderSearch();});
+});
+(function(){
+  var box=document.getElementById("search-box");
+  if(box)box.addEventListener("input",function(){_sq=this.value;renderSearch();});
+})();
+if(typeof showTab==="function"){
+  var _origST=showTab;
+  showTab=function(name){_origST(name);if(name==="search")renderSearch();};
+}
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",function(){showTab("search");});
+}else{showTab("search");}
 })();
 </script>
 </body>
