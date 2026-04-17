@@ -185,6 +185,7 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 .s-clear.vis{display:block}
 .s-clear:hover{color:var(--text)}
 #search-results{max-width:1200px;margin:0 auto;padding:0 20px 40px}
+.src-tag{font-size:10px;color:var(--muted);opacity:0.6;margin-left:5px;white-space:nowrap;font-style:normal;}
 </style>
 </head>
 <body>
@@ -37892,7 +37893,7 @@ function renderWines(wines) {
                        : `<td class="dn">▼ ${h.delta.toFixed(0)} (${h.delta_pct}%)</td>`)
         : '<td>—</td>';
       const listCell = h.list_price ? `<td class="list">${h.list_price.toFixed(0)}</td>` : '<td></td>';
-      return `<tr><td>${h.date}</td><td class="price">${h.price.toFixed(0)}</td>${listCell}${deltaCell}<td class="subj" title="${senderName(h.sender)}">${h.subject}</td></tr>`;
+      return `<tr><td>${h.date}</td><td class="price">${h.price.toFixed(0)}</td>${listCell}${deltaCell}<td class="subj" title="${senderName(h.sender)}">${h.subject}<span class="src-tag"> · ${senderName(h.sender)}</span></td></tr>`;
     }).join('');
 
     const purRows = w.purchased && w.purchase_records.length ? 
@@ -38006,7 +38007,7 @@ function renderEvolution() {
               ? (h.delta > 0 ? `<td class="up">+${h.delta.toFixed(0)} (+${h.delta_pct}%)</td>` : `<td class="dn">${h.delta.toFixed(0)} (${h.delta_pct}%)</td>`)
               : '<td>—</td>';
             const lc = h.list_price ? `<td class="list">${h.list_price.toFixed(0)}</td>` : '<td></td>';
-            return `<tr><td>${h.date}</td><td class="price">${h.price.toFixed(0)}</td>${lc}${dc}<td class="subj" title="${senderName(h.sender)}">${h.subject}</td></tr>`;
+            return `<tr><td>${h.date}</td><td class="price">${h.price.toFixed(0)}</td>${lc}${dc}<td class="subj" title="${senderName(h.sender)}">${h.subject}<span class="src-tag"> · ${senderName(h.sender)}</span></td></tr>`;
           }).join('')}</tbody>
         </table>
       </div>
@@ -38032,9 +38033,6 @@ function senderName(email) {
     'caveroyale.ch': 'Cave Royale',
     'lepasseurdevin.ch': 'Le Passeur de Vin',
     'qoqa.ch': 'Qoqa',
-    'vinotechleman.ch': 'Vinotech du Léman',
-    'vinsdehauteur.ch': 'Les Vins d'Hauteur',
-    'cremeriedusaleve@gmail.com': 'La Crèmerie du Salève'
   };
   var domain = (email.split('@')[1] || '').toLowerCase();
   return SENDERS[domain] || domain;
