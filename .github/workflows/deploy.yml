@@ -16,18 +16,49 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare deploy folder
+      - name: Deploy via Python ftplib
         run: |
-          mkdir -p _deploy/private
-          cp index.html _deploy/index.html
-          cp wine_private.html _deploy/private/index.html
+          python3 << 'PYEOF'
+          import ftplib, ssl, os, sys
 
-      - name: Deploy to alceste.ch/wine/
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./_deploy/
-          server-dir: ./wine/
-          dangerous-clean-slate: false
+          HOST = os.environ['FTP_HOST']
+          USER = os.environ['FTP_USER']
+          PASS = os.environ['FTP_PASS']
+
+          ctx = ssl.create_default_context()
+          ctx.check_hostname = False
+          ctx.verify_mode = ssl.CERT_NONE
+
+          print(f"Connecting to {HOST}...")
+          ftp = ftplib.FTP_TLS(context=ctx)
+          ftp.set_debuglevel(2)
+          ftp.connect(HOST, 21)
+          ftp.login(USER, PASS)
+          ftp.prot_p()  # Protect data channel — critical for Infomaniak
+          print("Connected and data channel protected")
+
+          # Ensure directories exist
+          for d in ['wine', 'wine/private']:
+              try:
+                  ftp.mkd(d)
+                  print(f"Created dir: {d}")
+              except ftplib.error_perm as e:
+                  print(f"Dir exists or error: {d} — {e}")
+
+          # Upload index.html
+          with open('index.html', 'rb') as f:
+              ftp.storbinary('STOR wine/index.html', f)
+          print("Uploaded: wine/index.html")
+
+          # Upload wine_private.html
+          with open('wine_private.html', 'rb') as f:
+              ftp.storbinary('STOR wine/private/index.html', f)
+          print("Uploaded: wine/private/index.html")
+
+          ftp.quit()
+          print("Done.")
+          PYEOF
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
