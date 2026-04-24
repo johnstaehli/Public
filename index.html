@@ -40,6 +40,11 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
                color: var(--muted); font-size: 14px; }
 .updated { color: var(--muted); font-size: 11px; white-space: nowrap; margin-left: auto; }
+.lang-toggle { display: flex; background: var(--pill-bg); border: 1px solid var(--border);
+               border-radius: 20px; overflow: hidden; margin-left: 8px; flex-shrink: 0; }
+.lang-btn { padding: 4px 10px; font-size: 11px; font-weight: 600; cursor: pointer;
+            color: var(--muted); border: none; background: none; transition: .15s; letter-spacing: .04em; }
+.lang-btn.active { background: var(--accent2); color: var(--accent); }
 
 /* TABS */
 .tabs { background: var(--surface); border-bottom: 1px solid var(--border); }
@@ -199,14 +204,18 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
       <input type="text" id="search" placeholder="Search wine, producer, appellation…" oninput="applyFilters()">
     </div>
     <div class="updated" id="updated-lbl"></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setWineLang('en')">EN</button>
+      <button class="lang-btn" id="btn-fr" onclick="setWineLang('fr')">FR</button>
+    </div>
   </div>
 </header>
 
 <div class="tabs">
   <div class="tabs-inner">
-    <div class="tab active" onclick="showTab('search')">Search</div>
-    <div class="tab" onclick="showTab('offers')">All Offers</div>
-    <div class="tab" onclick="showTab('evolution')">Price Evolution</div>
+    <div class="tab active" id="tab-btn-search" onclick="showTab('search')">Search</div>
+    <div class="tab" id="tab-btn-offers" onclick="showTab('offers')">All Offers</div>
+    <div class="tab" id="tab-btn-evolution" onclick="showTab('evolution')">Price Evolution</div>
   </div>
 </div>
 
@@ -237,7 +246,7 @@ header { background: var(--surface); border-bottom: 1px solid var(--border);
 <div id="tab-offers">
   <div class="filters" id="filters-row"></div>
   <div class="sort-row">
-    <span style="color:var(--muted)">Sort:</span>
+    <span style="color:var(--muted)" id="lbl-sort-main">Sort:</span>
     <span class="sort-btn active" id="sort-name" onclick="setSort('name')">Name</span>
     <span class="sort-btn" id="sort-price" onclick="setSort('price')">Price ↑</span>
     <span class="sort-btn" id="sort-price-d" onclick="setSort('price-d')">Price ↓</span>
@@ -38801,6 +38810,87 @@ if(typeof showTab==="function"){
 if(document.readyState==="loading"){
   document.addEventListener("DOMContentLoaded",function(){showTab("search");});
 }else{showTab("search");}
+})();
+</script>
+
+<script>
+(function(){
+  var I = {
+    en: {
+      updated: function(s){ return 'Updated ' + s; },
+      tabs: { search:'Search', offers:'All Offers', evolution:'Price Evolution' },
+      sortLabel: 'Sort:',
+      stats: {
+        'Total Offers':'Total Offers','Unique Wines':'Unique Wines','Offered 2x+':'Offered 2x+',
+        'Purchased':'Purchased','My Orders':'My Orders','Bottles Bought':'Bottles Bought',
+        'Est. Total Spend':'Est. Total Spend'
+      },
+      heroTitle: 'Wine Cellar',
+      placeholder: 'e.g. rayas, burgundy 2020, rostaing…'
+    },
+    fr: {
+      updated: function(s){ return 'Mis à jour le ' + s; },
+      tabs: { search:'Recherche', offers:'Toutes les offres', evolution:'Évolution des prix' },
+      sortLabel: 'Trier :',
+      stats: {
+        'Total Offers':'Offres totales','Unique Wines':'Vins uniques','Offered 2x+':'Offerts 2x+',
+        'Purchased':'Achetés','My Orders':'Mes commandes','Bottles Bought':'Bouteilles achetées',
+        'Est. Total Spend':'Dépenses totales'
+      },
+      heroTitle: 'Cave à Vins',
+      placeholder: 'ex. rayas, bourgogne 2020, rostaing…'
+    }
+  };
+
+  function applyLang(lang) {
+    var T = I[lang];
+    // Updated label
+    var upd = document.getElementById('updated-lbl');
+    if (upd) {
+      var raw = upd.textContent.replace(/^(Updated|Mis à jour le)\s*/i, '');
+      upd.textContent = T.updated(raw);
+    }
+    // Tabs
+    ['search','offers','evolution'].forEach(function(k){
+      var el = document.getElementById('tab-btn-' + k);
+      if (el) el.textContent = T.tabs[k];
+    });
+    // Sort label
+    var sl = document.getElementById('lbl-sort-main');
+    if (sl) sl.textContent = T.sortLabel;
+    // Stats bar labels
+    document.querySelectorAll('#stats-bar .stat').forEach(function(el){
+      var lbl = el.querySelector('.stat-lbl');
+      if (!lbl) return;
+      var cur = lbl.textContent.trim();
+      var enS = I.en.stats, frS = I.fr.stats;
+      var key = Object.keys(enS).find(function(k){ return enS[k]===cur || frS[k]===cur; });
+      if (key) lbl.textContent = T.stats[key];
+    });
+    // Hero title
+    var ht = document.querySelector('.search-hero-title');
+    if (ht) ht.textContent = T.heroTitle;
+    // Search placeholder
+    var sb = document.getElementById('search-box');
+    if (sb) sb.placeholder = T.placeholder;
+    // Buttons
+    var be = document.getElementById('btn-en'), bf = document.getElementById('btn-fr');
+    if (be) be.classList.toggle('active', lang==='en');
+    if (bf) bf.classList.toggle('active', lang==='fr');
+    document.documentElement.lang = lang;
+  }
+
+  window.setWineLang = function(lang) {
+    localStorage.setItem('wine-lang', lang);
+    applyLang(lang);
+  };
+
+  var saved = localStorage.getItem('wine-lang') || 'en';
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(function(){ applyLang(saved); }, 50); });
+  } else {
+    setTimeout(function(){ applyLang(saved); }, 50);
+  }
 })();
 </script>
 </body>
