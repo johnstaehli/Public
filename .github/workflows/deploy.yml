@@ -16,47 +16,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy via Python ftplib
+      - name: FTP debug deploy
         run: |
           python3 << 'PYEOF'
-          import ftplib, ssl, os, sys
+          import ftplib, ssl, os
 
           HOST = os.environ['FTP_HOST']
           USER = os.environ['FTP_USER']
           PASS = os.environ['FTP_PASS']
 
-          ctx = ssl.create_default_context()
-          ctx.check_hostname = False
-          ctx.verify_mode = ssl.CERT_NONE
+          # Try plain FTP first (no SSL) to isolate SSL issues
+          print("=== Trying plain FTP (no SSL) ===")
+          try:
+              ftp = ftplib.FTP()
+              ftp.set_debuglevel(1)
+              ftp.connect(HOST, 21, timeout=30)
+              ftp.login(USER, PASS)
+              print(f"PWD: {ftp.pwd()}")
+              print(f"LIST root: {ftp.nlst('.')}")
 
-          print(f"Connecting to {HOST}...")
-          ftp = ftplib.FTP_TLS(context=ctx)
-          ftp.set_debuglevel(2)
-          ftp.connect(HOST, 21)
-          ftp.login(USER, PASS)
-          ftp.prot_p()  # Protect data channel — critical for Infomaniak
-          print("Connected and data channel protected")
-
-          # Ensure directories exist
-          for d in ['wine', 'wine/private']:
+              # Try to create wine dir and upload test file
               try:
-                  ftp.mkd(d)
-                  print(f"Created dir: {d}")
-              except ftplib.error_perm as e:
-                  print(f"Dir exists or error: {d} — {e}")
+                  ftp.mkd('wine')
+              except:
+                  pass
+              ftp.cwd('wine')
+              print(f"PWD after cd wine: {ftp.pwd()}")
+              with open('wine_private.html', 'rb') as f:
+                  resp = ftp.storbinary('STOR test_upload.html', f)
+              print(f"STOR response: {resp}")
+              print(f"LIST wine after upload: {ftp.nlst('.')}")
+              ftp.quit()
+              print("Plain FTP: SUCCESS")
+          except Exception as e:
+              print(f"Plain FTP failed: {e}")
 
-          # Upload index.html
-          with open('index.html', 'rb') as f:
-              ftp.storbinary('STOR wine/index.html', f)
-          print("Uploaded: wine/index.html")
-
-          # Upload wine_private.html
-          with open('wine_private.html', 'rb') as f:
-              ftp.storbinary('STOR wine/private/index.html', f)
-          print("Uploaded: wine/private/index.html")
-
-          ftp.quit()
-          print("Done.")
           PYEOF
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
