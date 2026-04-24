@@ -16,24 +16,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
-
-      - name: Deploy to alceste.ch/wine/
+      - name: Deploy public dashboard
         run: |
-          lftp -d -e "
-            set ftp:ssl-allow yes;
-            set ssl:verify-certificate no;
-            set ftp:passive-mode yes;
-            set net:timeout 30;
-            set net:max-retries 3;
-            open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-            mkdir -p wine;
-            mkdir -p wine/private;
-            put index.html -o wine/index.html;
-            put wine_private.html -o wine/private/index.html;
-            bye
-          " 2>&1
+          curl -v --ftp-ssl --ftp-create-dirs \
+            -T index.html \
+            "ftp://$FTP_HOST/wine/index.html" \
+            --user "$FTP_USER:$FTP_PASS"
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+
+      - name: Deploy private dashboard
+        run: |
+          curl -v --ftp-ssl --ftp-create-dirs \
+            -T wine_private.html \
+            "ftp://$FTP_HOST/wine/private/index.html" \
+            --user "$FTP_USER:$FTP_PASS"
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
