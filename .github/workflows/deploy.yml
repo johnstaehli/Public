@@ -47,21 +47,23 @@ jobs:
           with open('wine_private.html', 'rb') as f:
               print('wine_private/index.html:', ftp.storbinary('STOR index.html', f))
 
-          # PHP probe: discover absolute account root
-          probe = b'<?php echo realpath(__DIR__ . "/../../.."); ?>'
+          # PHP probe at web ROOT (not /private/ which may be auth-protected)
+          probe = b'<?php echo realpath(__DIR__ . "/.."); ?>'
+          ftp.cwd('..')  # private -> wine
+          ftp.cwd('..')  # wine -> web
           ftp.storbinary('STOR probe.php', io.BytesIO(probe))
+          print('Probe uploaded to web root')
           time.sleep(4)
 
           try:
-              req = urllib.request.urlopen('https://www.alceste.ch/wine/private/probe.php', timeout=12)
+              req = urllib.request.urlopen('https://www.alceste.ch/probe.php', timeout=12)
               account_root = req.read().decode().strip()
               print('Account root:', account_root)
               ftp.delete('probe.php')
+              print('Probe cleaned up')
 
               # Upload .htpasswd to account root (above web, not web-accessible)
               htpasswd = b'john:$apr1$LbllcFBd$4JMINScpSmw0cAj0UjY.n/\n'
-              ftp.cwd('..')  # private -> wine
-              ftp.cwd('..')  # wine -> web
               ftp.cwd('..')  # web -> account root /
               ftp.storbinary('STOR .htpasswd_wine', io.BytesIO(htpasswd))
               print('.htpasswd_wine uploaded to account root')
@@ -81,8 +83,10 @@ jobs:
               print('.htaccess uploaded. AuthUserFile:', passwd_path)
 
           except Exception as e:
-              print('Auth setup error:', e)
-              try: ftp.delete('probe.php')
+              print('Auth setup error:', type(e).__name__, e)
+              try:
+                  ftp.cwd('web')
+                  ftp.delete('probe.php')
               except: pass
 
           ftp.quit()
