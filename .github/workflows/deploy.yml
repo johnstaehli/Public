@@ -17,56 +17,45 @@ jobs:
       - name: Deploy via FTP
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASS }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
           python3 << 'PYEOF'
-import ftplib, os
+          import ftplib, os
 
-HOST = os.environ['FTP_HOST']
-USER = os.environ['FTP_USER']
-PASS = os.environ['FTP_PASS']
+          HOST = os.environ['FTP_HOST']
+          USER = os.environ['FTP_USER']
+          PASS = os.environ['FTP_PASS']
 
-def ensure_dir(ftp, path):
-    parts = [p for p in path.split('/') if p]
-    for part in parts:
-        try:
-            ftp.mkd(part)
-        except:
-            pass
-        ftp.cwd(part)
+          ftp = ftplib.FTP()
+          ftp.connect(HOST, 21, timeout=30)
+          ftp.login(USER, PASS)
+          print(f'Logged in, PWD={ftp.pwd()}')
 
-ftp = ftplib.FTP()
-ftp.connect(HOST, 21, timeout=30)
-ftp.login(USER, PASS)
+          ftp.cwd('web')
 
-# Navigate to web root
-ftp.cwd('web')
+          try:
+              ftp.mkd('wine')
+          except:
+              pass
 
-# Ensure wine/ exists
-try:
-    ftp.mkd('wine')
-except:
-    pass
+          ftp.cwd('wine')
 
-# Upload public dashboard
-ftp.cwd('wine')
-with open('index.html', 'rb') as f:
-    resp = ftp.storbinary('STOR index.html', f)
-print(f'index.html: {resp}')
+          with open('index.html', 'rb') as f:
+              resp = ftp.storbinary('STOR index.html', f)
+          print(f'index.html: {resp}')
 
-# Ensure wine/private/ exists
-try:
-    ftp.mkd('private')
-except:
-    pass
+          try:
+              ftp.mkd('private')
+          except:
+              pass
 
-# Upload private dashboard
-ftp.cwd('private')
-with open('wine_private.html', 'rb') as f:
-    resp = ftp.storbinary('STOR index.html', f)
-print(f'wine_private/index.html: {resp}')
+          ftp.cwd('private')
 
-ftp.quit()
-print('Done.')
-PYEOF
+          with open('wine_private.html', 'rb') as f:
+              resp = ftp.storbinary('STOR index.html', f)
+          print(f'wine_private/index.html: {resp}')
+
+          ftp.quit()
+          print('Deploy complete.')
+          PYEOF
