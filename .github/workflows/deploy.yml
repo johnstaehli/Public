@@ -1,0 +1,48 @@
+name: Deploy to alceste.ch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'wine_private.html'
+      - 'edulis_last_processed.txt'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Deploy public dashboard
+        run: |
+          lftp -e "
+            set ftp:ssl-allow yes;
+            set ssl:verify-certificate no;
+            open -u $FTP_USER,$FTP_PASS $FTP_HOST;
+            put -O /wine index.html;
+            bye
+          "
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+
+      - name: Deploy private dashboard
+        run: |
+          lftp -e "
+            set ftp:ssl-allow yes;
+            set ssl:verify-certificate no;
+            open -u $FTP_USER,$FTP_PASS $FTP_HOST;
+            put -O /wine/private wine_private.html -o index.html;
+            bye
+          "
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
