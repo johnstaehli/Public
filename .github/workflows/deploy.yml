@@ -40,6 +40,12 @@ jobs:
           with open('index.html', 'rb') as f:
               print('index.html:', ftp.storbinary('STOR index.html', f))
 
+          # Upload favicons
+          with open('favicon-index.svg', 'rb') as f:
+              print('favicon-index.svg:', ftp.storbinary('STOR favicon-index.svg', f))
+          with open('favicon-wine.svg', 'rb') as f:
+              print('favicon-wine.svg:', ftp.storbinary('STOR favicon-wine.svg', f))
+
           # Upload private dashboard
           try: ftp.mkd('private')
           except: pass
