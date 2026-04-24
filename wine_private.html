@@ -1,1 +1,101 @@
-<!-- trigger: probe path fix -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wine DB — Private</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f12;color:#e8e8ea;min-height:100vh}
+header{background:#1a1a22;border-bottom:1px solid #2a2a35;padding:16px 24px;display:flex;align-items:center;gap:12px}
+header h1{font-size:1.1rem;font-weight:600}
+.badge{background:#7c3aed;color:#fff;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.05em;text-transform:uppercase}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:24px}
+.stat{background:#1a1a22;border:1px solid #2a2a35;border-radius:8px;padding:16px}
+.stat .val{font-size:1.6rem;font-weight:700;color:#a78bfa}
+.stat .lbl{font-size:.72rem;color:#666;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+.tabs{display:flex;gap:2px;padding:0 24px 12px}
+.tab{padding:8px 16px;border-radius:6px;font-size:.82rem;font-weight:500;cursor:pointer;color:#888;border:none;background:transparent}
+.tab.active{background:#2a2a35;color:#e8e8ea}
+.section{padding:0 24px 32px}
+.search-bar{width:100%;background:#1a1a22;border:1px solid #2a2a35;border-radius:6px;padding:10px 14px;color:#e8e8ea;font-size:.9rem;margin-bottom:16px;outline:none}
+.search-bar:focus{border-color:#7c3aed}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{text-align:left;padding:8px 12px;color:#555;font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #2a2a35}
+td{padding:9px 12px;border-bottom:1px solid #1a1a22;vertical-align:top}
+tr:hover td{background:#1a1a22}
+.empty{text-align:center;padding:48px;color:#444}
+.app{background:#2a2a35;color:#a78bfa;padding:2px 7px;border-radius:4px;font-size:.75rem}
+.price{color:#4ade80;font-weight:600}
+.updated{font-size:.72rem;color:#555;padding:4px 24px 12px}
+a{color:#666;text-decoration:none}a:hover{color:#999}
+</style>
+</head>
+<body>
+<header>
+  <span style="font-size:1.4rem">🍷</span>
+  <h1>Wine DB</h1>
+  <span class="badge">Private</span>
+  <span style="flex:1"></span>
+  <a href="../">← Public view</a>
+</header>
+<div class="updated" id="upd">Updated 24 Apr 2026</div>
+<div class="stats">
+  <div class="stat"><div class="val" id="s-btl">0</div><div class="lbl">Bottles purchased</div></div>
+  <div class="stat"><div class="val" id="s-ord">0</div><div class="lbl">Orders</div></div>
+  <div class="stat"><div class="val" id="s-chf">0</div><div class="lbl">CHF total spent</div></div>
+  <div class="stat"><div class="val" id="s-avg">—</div><div class="lbl">CHF avg/bottle</div></div>
+  <div class="stat"><div class="val" id="s-off">0</div><div class="lbl">Offers received</div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="show('purchases',this)">Purchases</button>
+  <button class="tab" onclick="show('offers',this)">All Offers</button>
+</div>
+<div class="section">
+  <input class="search-bar" id="q" placeholder="Search wine, producer, appellation, vintage..." oninput="filter()">
+  <div id="v-purchases">
+    <table><thead><tr><th>Date</th><th>Wine</th><th>Producer</th><th>Appellation</th><th>Vintage</th><th>Qty</th><th>CHF/btl</th><th>Total CHF</th><th>Note</th></tr></thead>
+    <tbody id="tb-p"><tr><td colspan="9" class="empty">No purchases yet — data will appear after first Edulis email is processed</td></tr></tbody></table>
+  </div>
+  <div id="v-offers" style="display:none">
+    <table><thead><tr><th>Date</th><th>Wine</th><th>Producer</th><th>Appellation</th><th>Vintage</th><th>Price CHF</th><th>Orig CHF</th><th>Email subject</th></tr></thead>
+    <tbody id="tb-o"><tr><td colspan="8" class="empty">No offers yet — data will appear after first Edulis email is processed</td></tr></tbody></table>
+  </div>
+</div>
+<script>
+const P=[];const O=[];
+const s=id=>document.getElementById(id);
+if(P.length){
+  const btl=P.reduce((a,r)=>a+(+r.Qty_Bottles||0),0);
+  const chf=P.reduce((a,r)=>a+(+r.Price_Per_Bottle_CHF||0)*(+r.Qty_Bottles||0),0);
+  s('s-btl').textContent=btl;s('s-ord').textContent=P.length;
+  s('s-chf').textContent=Math.round(chf).toLocaleString();
+  s('s-avg').textContent=btl?(chf/btl).toFixed(0):'—';
+}
+s('s-off').textContent=O.length;
+const e=v=>String(v||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const ab=v=>v?'<span class="app">'+e(v)+'</span>':'';
+if(P.length)s('tb-p').innerHTML=P.map(r=>{
+  const t=((+r.Price_Per_Bottle_CHF||0)*(+r.Qty_Bottles||0)).toFixed(0);
+  return '<tr><td>'+e(r.Order_Date)+'</td><td><b>'+e(r.Wine)+'</b></td><td>'+e(r.Producer)+'</td><td>'+ab(r.Appellation)+'</td><td>'+e(r.Vintage)+'</td><td>'+e(r.Qty_Bottles)+'</td><td class="price">'+e(r.Price_Per_Bottle_CHF)+'</td><td class="price">'+t+'</td><td style="color:#555;font-size:.78rem">'+e(r.Order_Note)+'</td></tr>';
+}).join('');
+if(O.length)s('tb-o').innerHTML=O.map(r=>
+  '<tr><td>'+e(r.Date)+'</td><td><b>'+e(r.Wine)+'</b></td><td>'+e(r.Producer)+'</td><td>'+ab(r.Appellation)+'</td><td>'+e(r.Vintage)+'</td><td class="price">'+e(r.Price_CHF)+'</td><td style="color:#888">'+e(r.Original_Price_CHF)+'</td><td style="color:#555;font-size:.78rem">'+e(r.Email_Subject)+'</td></tr>'
+).join('');
+let cur='purchases';
+function show(tab,btn){
+  cur=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  s('v-purchases').style.display=tab==='purchases'?'':'none';
+  s('v-offers').style.display=tab==='offers'?'':'none';
+  filter();
+}
+function filter(){
+  const q=s('q').value.toLowerCase();
+  const tb=s(cur==='purchases'?'tb-p':'tb-o');
+  Array.from(tb.rows).forEach(r=>r.style.display=r.textContent.toLowerCase().includes(q)?'':'none');
+}
+</script>
+</body>
+</html>
