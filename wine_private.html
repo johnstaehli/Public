@@ -4,69 +4,135 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Offres Edulis — Cave Privée</title>
-<link rel="icon" href="../favicon-wine.svg">
+<link rel="icon" type="image/svg+xml" href="../favicon-wine.svg">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f0f12;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;padding:24px 16px}
-h1{font-size:1.5rem;font-weight:700;color:#f8fafc;margin-bottom:4px}
-.sub{color:#94a3b8;font-size:.85rem;margin-bottom:24px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:28px}
-.stat{background:#1a1a24;border:1px solid #2d2d3d;border-radius:10px;padding:16px}
-.stat-label{font-size:.72rem;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.stat-value{font-size:1.6rem;font-weight:700;color:#a78bfa}
-.stat-value.sm{font-size:1.1rem}
-.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.filters label{font-size:.75rem;color:#64748b;text-transform:uppercase;letter-spacing:.05em}
-.filters select{background:#1a1a24;border:1px solid #2d2d3d;color:#cbd5e1;border-radius:6px;padding:6px 10px;font-size:.82rem;cursor:pointer}
-.filters select:focus{outline:none;border-color:#a78bfa}
-.filter-reset{background:none;border:1px solid #2d2d3d;color:#64748b;border-radius:6px;padding:6px 12px;font-size:.78rem;cursor:pointer;transition:.15s}
-.filter-reset:hover{border-color:#a78bfa;color:#a78bfa}
-.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid #2d2d3d}
-table{width:100%;border-collapse:collapse;font-size:.83rem}
-th{background:#1a1a24;color:#64748b;font-weight:600;text-align:left;padding:10px 12px;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;cursor:pointer;user-select:none}
-th:hover{color:#a78bfa}
-td{padding:9px 12px;border-top:1px solid #1e1e2d;color:#cbd5e1;vertical-align:middle}
-tr:hover td{background:#13131c}
-tr.is-new td{background:#1a1a2e}
-.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.71rem;font-weight:700;vertical-align:middle;margin-left:6px}
-.badge-new{background:#312060;color:#c4b5fd;border:1px solid #4c1d95}
-.badge-save{background:#1a2e1a;color:#4ade80}
-.price{font-weight:600;color:#a78bfa;white-space:nowrap}
-.orig{text-decoration:line-through;color:#475569;font-size:.78rem;margin-left:5px}
-.wine-name{font-weight:500;color:#f1f5f9}
-.appellation{color:#94a3b8;font-size:.80rem}
-.producer{color:#64748b;font-size:.80rem}
-.empty{text-align:center;padding:48px 24px;color:#475569}
-.no-results{text-align:center;padding:32px;color:#475569;font-size:.85rem}
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --card: #1e1e1e;
+  --border: #2a2a2a;
+  --accent: #c9a84c;
+  --accent2: #8b6914;
+  --text: #e8e8e8;
+  --muted: #888;
+  --green: #4caf7d;
+  --red: #e05555;
+  --blue: #4a90d9;
+  --pill-bg: #252525;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+header { background: var(--surface); border-bottom: 1px solid var(--border);
+         padding: 0 20px; position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 1200px; margin: 0 auto; display: flex;
+                align-items: center; gap: 16px; height: 56px; }
+.logo { font-size: 18px; font-weight: 700; color: var(--accent);
+        letter-spacing: .5px; white-space: nowrap; }
+.logo span { color: var(--muted); font-weight: 400; font-size: 12px; margin-left: 8px; }
+.updated { color: var(--muted); font-size: 11px; white-space: nowrap; margin-left: auto; }
+
+/* STATS BAR */
+.stats-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; }
+.stats-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 28px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; }
+.stat-val { font-size: 20px; font-weight: 700; color: var(--accent); }
+.stat-lbl { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+/* FILTERS */
+.filters-wrap { max-width: 1200px; margin: 0 auto; padding: 14px 20px;
+                display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.filter-group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.filter-label { font-size: 11px; color: var(--muted); text-transform: uppercase;
+                letter-spacing: .05em; margin-right: 2px; }
+.filter-btn { background: var(--pill-bg); border: 1px solid var(--border); color: var(--muted);
+              border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer;
+              transition: .15s; white-space: nowrap; }
+.filter-btn.active { background: var(--accent2); border-color: var(--accent); color: var(--accent); }
+.filter-btn:hover:not(.active) { border-color: var(--muted); color: var(--text); }
+.filter-sep { color: var(--border); margin: 0 4px; }
+
+/* SORT ROW */
+.sort-row { max-width: 1200px; margin: 0 auto; padding: 0 20px 10px;
+            display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+.sort-lbl { margin-right: 2px; }
+.sort-btn { cursor: pointer; padding: 3px 8px; border-radius: 4px; transition: .15s; }
+.sort-btn.active { color: var(--accent); background: var(--pill-bg); }
+.sort-btn:hover:not(.active) { color: var(--text); }
+.result-count { margin-left: auto; }
+
+/* TABLE */
+.tbl-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px 40px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--card); color: var(--muted); font-weight: 600; text-align: left;
+     padding: 10px 12px; border-bottom: 2px solid var(--border);
+     font-size: 11px; text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+tr:hover td { background: var(--card); }
+tr.is-new td { border-left: 2px solid var(--accent); }
+tr.is-new td:first-child { padding-left: 10px; }
+.wine-name { font-weight: 600; color: var(--text); }
+.producer { color: var(--muted); font-size: 12px; }
+.price-cell { color: var(--accent); font-weight: 700; white-space: nowrap; }
+.orig { text-decoration: line-through; color: var(--muted); font-size: 11px;
+        font-weight: 400; margin-left: 5px; }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 4px;
+         font-size: 10px; font-weight: 700; vertical-align: middle; margin-left: 6px; }
+.badge-new { background: rgba(201,168,76,.12); color: var(--accent);
+             border: 1px solid rgba(201,168,76,.3); }
+.badge-disc { background: rgba(76,175,125,.1); color: var(--green);
+              border: 1px solid rgba(76,175,125,.25); }
+.no-results { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 600px) {
+  .stats-inner { gap: 16px; }
+  .producer { display: none; }
+  .logo span { display: none; }
+}
 </style>
 </head>
 <body>
-<h1>Offres Edulis — Cave Privée</h1>
-<div class="sub">Mis à jour le <span id="updated-date"></span></div>
 
-<div class="stats" id="stats-area"></div>
+<header>
+  <div class="header-inner">
+    <div class="logo">🍷 Offres Edulis <span>Cave Privée</span></div>
+    <div class="updated" id="updated-lbl"></div>
+  </div>
+</header>
 
-<div class="filters">
-  <label>Millésime</label>
-  <select id="filter-vintage" onchange="applyFilters()">
-    <option value="">Tous</option>
-  </select>
-  <label>Appellation</label>
-  <select id="filter-appellation" onchange="applyFilters()">
-    <option value="">Toutes</option>
-  </select>
-  <button class="filter-reset" onclick="resetFilters()">Réinitialiser</button>
+<div class="stats-bar">
+  <div class="stats-inner" id="stats-inner"></div>
+</div>
+
+<div class="filters-wrap">
+  <span class="filter-label">Millésime</span>
+  <div class="filter-group" id="filter-vintage"></div>
+  <span class="filter-sep">|</span>
+  <span class="filter-label">Appellation</span>
+  <div class="filter-group" id="filter-appellation"></div>
+</div>
+
+<div class="sort-row">
+  <span class="sort-lbl">Trier par</span>
+  <span class="sort-btn active" id="sb-Date" onclick="sortBy('Date')">Date</span>
+  <span class="sort-btn" id="sb-Wine" onclick="sortBy('Wine')">Vin</span>
+  <span class="sort-btn" id="sb-Appellation" onclick="sortBy('Appellation')">Appellation</span>
+  <span class="sort-btn" id="sb-Vintage" onclick="sortBy('Vintage')">Millésime</span>
+  <span class="sort-btn" id="sb-Price_CHF" onclick="sortBy('Price_CHF')">Prix</span>
+  <span class="result-count" id="result-count"></span>
 </div>
 
 <div class="tbl-wrap">
-  <table id="offers-table">
+  <table>
     <thead><tr>
-      <th onclick="sortBy('Date')">Date</th>
-      <th onclick="sortBy('Wine')">Vin</th>
-      <th onclick="sortBy('Producer')">Producteur</th>
-      <th onclick="sortBy('Appellation')">Appellation</th>
-      <th onclick="sortBy('Vintage')">Mill.</th>
-      <th onclick="sortBy('Price_CHF')">Prix CHF</th>
+      <th>Date</th>
+      <th>Vin</th>
+      <th>Producteur</th>
+      <th>Appellation</th>
+      <th>Mill.</th>
+      <th>Prix CHF / bt</th>
     </tr></thead>
     <tbody id="offers-body"></tbody>
   </table>
@@ -76,61 +142,76 @@ tr.is-new td{background:#1a1a2e}
 const TODAY = "2026-04-24";
 const LATEST_DATE = "2026-04-24";
 
-// Inline data from CSV — newest first
 const O=[{"Date":"2026-04-24","Wine":"Perrier-Jouët Blanc de Blancs","Producer":"Perrier-Jouët","Appellation":"Champagne","Vintage":"NV","Price_CHF":49.50,"Original_Price_CHF":54.50},{"Date":"2026-04-24","Wine":"Château Minuty 281 Rosé","Producer":"Château Minuty","Appellation":"Côtes de Provence","Vintage":"2025","Price_CHF":35.00,"Original_Price_CHF":39.00},{"Date":"2026-04-24","Wine":"Château Sociando-Mallet (Magnum)","Producer":"Château Sociando-Mallet","Appellation":"Haut-Médoc","Vintage":"2018","Price_CHF":29.50,"Original_Price_CHF":34.50},{"Date":"2026-04-23","Wine":"Vega Sicilia Unico Reserva Especial","Producer":"Vega Sicilia","Appellation":"Ribera del Duero","Vintage":"NV","Price_CHF":360.00,"Original_Price_CHF":360.00},{"Date":"2026-04-23","Wine":"Puligny-Montrachet 1er Cru Les Pucelles","Producer":"Maison Jacques Moinel","Appellation":"Puligny-Montrachet","Vintage":"2023","Price_CHF":69.00,"Original_Price_CHF":69.00},{"Date":"2026-04-23","Wine":"Champagne Largillier","Producer":"Guillaume Selosse","Appellation":"Champagne","Vintage":"NV","Price_CHF":420.00,"Original_Price_CHF":420.00},{"Date":"2026-04-23","Wine":"Champagne Au-Dessus du Gros Mont","Producer":"Guillaume Selosse","Appellation":"Champagne","Vintage":"NV","Price_CHF":580.00,"Original_Price_CHF":580.00},{"Date":"2026-04-23","Wine":"Guado al Tasso","Producer":"Marchesi Antinori","Appellation":"Bolgheri","Vintage":"2023","Price_CHF":95.00,"Original_Price_CHF":95.00},{"Date":"2026-04-22","Wine":"Etna Rosso","Producer":"Giovanni Rosso","Appellation":"Etna","Vintage":"2019","Price_CHF":26.00,"Original_Price_CHF":26.00},{"Date":"2026-04-22","Wine":"Château Canon","Producer":"Château Canon","Appellation":"St-Emilion Grand Cru","Vintage":"2019","Price_CHF":89.00,"Original_Price_CHF":89.00},{"Date":"2026-04-22","Wine":"Bourgogne Blanc","Producer":"Domaine Roulot","Appellation":"Bourgogne","Vintage":"2023","Price_CHF":95.00,"Original_Price_CHF":95.00},{"Date":"2026-04-22","Wine":"Meursault Les Narvaux","Producer":"Domaine Roulot","Appellation":"Meursault","Vintage":"2023","Price_CHF":255.00,"Original_Price_CHF":255.00},{"Date":"2026-04-21","Wine":"Ruinart Brut R","Producer":"Ruinart","Appellation":"Champagne","Vintage":"NV","Price_CHF":39.00,"Original_Price_CHF":44.00},{"Date":"2026-04-21","Wine":"Petrolo Boggina B","Producer":"Petrolo","Appellation":"Toscana IGT","Vintage":"2021","Price_CHF":45.00,"Original_Price_CHF":45.00},{"Date":"2026-04-21","Wine":"Château Boyd-Cantenac","Producer":"Château Boyd-Cantenac","Appellation":"Margaux","Vintage":"2015","Price_CHF":39.00,"Original_Price_CHF":39.00},{"Date":"2026-04-21","Wine":"Insignia","Producer":"Joseph Phelps","Appellation":"Napa Valley","Vintage":"2019","Price_CHF":165.00,"Original_Price_CHF":214.00},{"Date":"2026-04-21","Wine":"Château Guadet","Producer":"Château Guadet","Appellation":"St-Emilion Grand Cru","Vintage":"2020","Price_CHF":59.00,"Original_Price_CHF":59.00},{"Date":"2026-04-21","Wine":"Château Guadet","Producer":"Château Guadet","Appellation":"St-Emilion Grand Cru","Vintage":"2016","Price_CHF":59.00,"Original_Price_CHF":59.00}];
 
-// Format date as human-readable
 function fmtDate(d){
-  const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
-  const [y,m,day]=d.split('-');
-  return `${parseInt(day)} ${months[parseInt(m)-1]} ${y}`;
+  const m=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  const [y,mo,day]=d.split('-'); return `${parseInt(day)} ${m[parseInt(mo)-1]} ${y}`;
 }
-document.getElementById('updated-date').textContent = fmtDate(TODAY);
-
-// Stats
-const totalOffers = O.length;
-const discounted = O.filter(r=>r.Original_Price_CHF > r.Price_CHF).length;
-const avgPrice = O.reduce((a,r)=>a+r.Price_CHF,0)/O.length;
 function fmt(n){return n%1===0?n.toFixed(0):n.toFixed(2);}
 
-document.getElementById('stats-area').innerHTML = [
-  ['Offres reçues', totalOffers],
-  ['Avec remise', discounted],
-  ['Prix moy. / bt', 'CHF '+fmt(avgPrice)],
-  ['Dernière offre', fmtDate(LATEST_DATE)]
-].map(([l,v])=>`<div class="stat"><div class="stat-label">${l}</div><div class="stat-value${typeof v==='string'&&v.length>6?' sm':''}">${v}</div></div>`).join('');
+document.getElementById('updated-lbl').textContent = 'Mis à jour le ' + fmtDate(TODAY);
 
-// Populate filters
-const vintages = [...new Set(O.map(r=>r.Vintage))].sort((a,b)=>{
-  if(a==='NV') return 1; if(b==='NV') return -1; return b-a;
-});
-const appellations = [...new Set(O.map(r=>r.Appellation))].sort();
-const fv = document.getElementById('filter-vintage');
-const fa = document.getElementById('filter-appellation');
-vintages.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;fv.appendChild(o);});
-appellations.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;fa.appendChild(o);});
+// Stats
+const discounted = O.filter(r=>r.Original_Price_CHF>r.Price_CHF).length;
+const avgPrice = O.reduce((a,r)=>a+r.Price_CHF,0)/O.length;
+document.getElementById('stats-inner').innerHTML=[
+  ['Offres reçues', O.length],
+  ['Avec remise', discounted],
+  ['Prix moyen / bt', 'CHF '+fmt(avgPrice)],
+  ['Dernière offre', fmtDate(LATEST_DATE)]
+].map(([l,v])=>`<div class="stat"><div class="stat-val">${v}</div><div class="stat-lbl">${l}</div></div>`).join('');
+
+// Filters
+let activeVintage='', activeApp='';
+const vintages=[...new Set(O.map(r=>r.Vintage))].sort((a,b)=>{if(a==='NV')return 1;if(b==='NV')return -1;return b-a;});
+const appellations=[...new Set(O.map(r=>r.Appellation))].sort();
+
+function makePills(containerId, items, getCurrent, setter){
+  const el=document.getElementById(containerId);
+  const all=document.createElement('span');
+  all.className='filter-btn active'; all.textContent='Tous';
+  all.onclick=()=>{setter('');render();};
+  el.appendChild(all);
+  items.forEach(v=>{
+    const b=document.createElement('span');
+    b.className='filter-btn'; b.textContent=v;
+    b.onclick=()=>{setter(v);render();};
+    el.appendChild(b);
+  });
+}
+makePills('filter-vintage', vintages, ()=>activeVintage, v=>activeVintage=v);
+makePills('filter-appellation', appellations, ()=>activeApp, v=>activeApp=v);
 
 let sortCol='Date', sortDir=-1;
-
 function sortBy(col){
-  if(sortCol===col) sortDir*=-1; else {sortCol=col;sortDir=-1;}
+  if(sortCol===col)sortDir*=-1; else{sortCol=col;sortDir=-1;}
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sb-'+col).classList.add('active');
   render();
 }
 
-function applyFilters(){render();}
-function resetFilters(){fv.value='';fa.value='';render();}
-
 function render(){
-  const vf=fv.value, af=fa.value;
-  let data=O.filter(r=>(!vf||r.Vintage===vf)&&(!af||r.Appellation===af));
+  // Update pill states
+  document.querySelectorAll('#filter-vintage .filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent===activeVintage||(activeVintage===''&&b.textContent==='Tous'));
+  });
+  document.querySelectorAll('#filter-appellation .filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent===activeApp||(activeApp===''&&b.textContent==='Tous'));
+  });
+
+  let data=O.filter(r=>(!activeVintage||r.Vintage===activeVintage)&&(!activeApp||r.Appellation===activeApp));
   data=data.slice().sort((a,b)=>{
     let va=a[sortCol],vb=b[sortCol];
     if(sortCol==='Price_CHF'){va=+va;vb=+vb;}
-    if(va<vb) return -sortDir; if(va>vb) return sortDir; return 0;
+    if(va<vb)return -sortDir; if(va>vb)return sortDir; return 0;
   });
+
+  document.getElementById('result-count').textContent=data.length+' offre'+(data.length!==1?'s':'');
+
   const ob=document.getElementById('offers-body');
-  if(data.length===0){
-    ob.innerHTML='<tr><td colspan="6"><div class="no-results">Aucun résultat pour ces filtres.</div></td></tr>';
+  if(!data.length){
+    ob.innerHTML='<tr><td colspan="6"><div class="no-results">Aucun résultat.</div></td></tr>';
     return;
   }
   ob.innerHTML=data.map(r=>{
@@ -139,11 +220,11 @@ function render(){
     const savePct=save?Math.round((1-r.Price_CHF/r.Original_Price_CHF)*100):0;
     return `<tr class="${isNew?'is-new':''}">
       <td>${r.Date}</td>
-      <td class="wine-name">${r.Wine}${isNew?'<span class="badge badge-new">NEW</span>':''}${save?`<span class="badge badge-save">-${savePct}%</span>`:''}</td>
+      <td class="wine-name">${r.Wine}${isNew?'<span class="badge badge-new">NEW</span>':''}${save?`<span class="badge badge-disc">-${savePct}%</span>`:''}</td>
       <td class="producer">${r.Producer}</td>
-      <td class="appellation">${r.Appellation}</td>
+      <td>${r.Appellation}</td>
       <td>${r.Vintage}</td>
-      <td class="price">CHF ${fmt(r.Price_CHF)}${save?`<span class="orig">CHF ${fmt(r.Original_Price_CHF)}</span>`:''}</td>
+      <td class="price-cell">CHF ${fmt(r.Price_CHF)}${save?`<span class="orig">CHF ${fmt(r.Original_Price_CHF)}</span>`:''}</td>
     </tr>`;
   }).join('');
 }
