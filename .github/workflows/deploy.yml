@@ -14,14 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP
+      - name: Deploy via FTP and configure auth
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
         run: |
           python3 << 'PYEOF'
-          import ftplib, os
+          import ftplib, os, io, time, urllib.request
 
           HOST = os.environ['FTP_HOST']
           USER = os.environ['FTP_USER']
@@ -30,31 +30,60 @@ jobs:
           ftp = ftplib.FTP()
           ftp.connect(HOST, 21, timeout=30)
           ftp.login(USER, PASS)
-          print(f'Logged in, PWD={ftp.pwd()}')
+          print('Connected. Root:', ftp.pwd())
 
+          # Upload public dashboard
           ftp.cwd('web')
-
-          try:
-              ftp.mkd('wine')
-          except:
-              pass
-
+          try: ftp.mkd('wine')
+          except: pass
           ftp.cwd('wine')
-
           with open('index.html', 'rb') as f:
-              resp = ftp.storbinary('STOR index.html', f)
-          print(f'index.html: {resp}')
+              print('index.html:', ftp.storbinary('STOR index.html', f))
+
+          # Upload private dashboard
+          try: ftp.mkd('private')
+          except: pass
+          ftp.cwd('private')
+          with open('wine_private.html', 'rb') as f:
+              print('wine_private/index.html:', ftp.storbinary('STOR index.html', f))
+
+          # PHP probe: discover absolute account root
+          probe = b'<?php echo realpath(__DIR__ . "/../../.."); ?>'
+          ftp.storbinary('STOR probe.php', io.BytesIO(probe))
+          time.sleep(4)
 
           try:
-              ftp.mkd('private')
-          except:
-              pass
+              req = urllib.request.urlopen('https://www.alceste.ch/wine/private/probe.php', timeout=12)
+              account_root = req.read().decode().strip()
+              print('Account root:', account_root)
+              ftp.delete('probe.php')
 
-          ftp.cwd('private')
+              # Upload .htpasswd to account root (above web, not web-accessible)
+              htpasswd = b'john:$apr1$LbllcFBd$4JMINScpSmw0cAj0UjY.n/\n'
+              ftp.cwd('..')  # private -> wine
+              ftp.cwd('..')  # wine -> web
+              ftp.cwd('..')  # web -> account root /
+              ftp.storbinary('STOR .htpasswd_wine', io.BytesIO(htpasswd))
+              print('.htpasswd_wine uploaded to account root')
 
-          with open('wine_private.html', 'rb') as f:
-              resp = ftp.storbinary('STOR index.html', f)
-          print(f'wine_private/index.html: {resp}')
+              # Build and upload .htaccess to wine/private/
+              passwd_path = account_root + '/.htpasswd_wine'
+              htaccess = (
+                  'AuthType Basic\n'
+                  'AuthName "Edulis Wine - Private"\n'
+                  'AuthUserFile ' + passwd_path + '\n'
+                  'Require valid-user\n'
+              ).encode()
+              ftp.cwd('web')
+              ftp.cwd('wine')
+              ftp.cwd('private')
+              ftp.storbinary('STOR .htaccess', io.BytesIO(htaccess))
+              print('.htaccess uploaded. AuthUserFile:', passwd_path)
+
+          except Exception as e:
+              print('Auth setup error:', e)
+              try: ftp.delete('probe.php')
+              except: pass
 
           ftp.quit()
           print('Deploy complete.')
