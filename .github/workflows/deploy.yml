@@ -21,17 +21,19 @@ jobs:
 
       - name: Deploy to alceste.ch/wine/
         run: |
-          lftp -e "
+          lftp -d -e "
             set ftp:ssl-allow yes;
             set ssl:verify-certificate no;
             set ftp:passive-mode yes;
+            set net:timeout 30;
+            set net:max-retries 3;
             open -u $FTP_USER,$FTP_PASS $FTP_HOST;
-            mkdir -p /wine;
-            mkdir -p /wine/private;
-            put -O /wine index.html;
-            put -O /wine/private wine_private.html -o index.html;
+            mkdir -p wine;
+            mkdir -p wine/private;
+            put index.html -o wine/index.html;
+            put wine_private.html -o wine/private/index.html;
             bye
-          "
+          " 2>&1
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
