@@ -33,6 +33,6 @@ jobs:
             bye
           "
         env:
-          FTP_HOST: ${{ secrets.FTP_HOTT }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
