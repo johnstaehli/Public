@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wine DB — Private</title>
+<link rel="icon" href="../favicon-wine.svg">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f12;color:#e8e8ea;min-height:100vh}
@@ -27,6 +28,7 @@ tr:hover td{background:#1a1a22}
 .empty{text-align:center;padding:48px;color:#444}
 .app{background:#2a2a35;color:#a78bfa;padding:2px 7px;border-radius:4px;font-size:.75rem}
 .price{color:#4ade80;font-weight:600}
+.source{color:#555;font-size:.75rem}
 .updated{font-size:.72rem;color:#555;padding:4px 24px 12px}
 a{color:#666;text-decoration:none}a:hover{color:#999}
 </style>
@@ -39,7 +41,7 @@ a{color:#666;text-decoration:none}a:hover{color:#999}
   <span style="flex:1"></span>
   <a href="../">← Public view</a>
 </header>
-<div class="updated" id="upd">Updated 24 Apr 2026</div>
+<div class="updated">Updated 24 Apr 2026</div>
 <div class="stats">
   <div class="stat"><div class="val" id="s-btl">0</div><div class="lbl">Bottles purchased</div></div>
   <div class="stat"><div class="val" id="s-ord">0</div><div class="lbl">Orders</div></div>
@@ -52,14 +54,14 @@ a{color:#666;text-decoration:none}a:hover{color:#999}
   <button class="tab" onclick="show('offers',this)">All Offers</button>
 </div>
 <div class="section">
-  <input class="search-bar" id="q" placeholder="Search wine, producer, appellation, vintage..." oninput="filter()">
+  <input class="search-bar" id="q" placeholder="Search wine, producer, appellation, vintage, retailer..." oninput="filter()">
   <div id="v-purchases">
     <table><thead><tr><th>Date</th><th>Wine</th><th>Producer</th><th>Appellation</th><th>Vintage</th><th>Qty</th><th>CHF/btl</th><th>Total CHF</th><th>Note</th></tr></thead>
-    <tbody id="tb-p"><tr><td colspan="9" class="empty">No purchases yet — data will appear after first Edulis email is processed</td></tr></tbody></table>
+    <tbody id="tb-p"><tr><td colspan="9" class="empty">No purchases yet — data appears after first Edulis email is processed</td></tr></tbody></table>
   </div>
   <div id="v-offers" style="display:none">
-    <table><thead><tr><th>Date</th><th>Wine</th><th>Producer</th><th>Appellation</th><th>Vintage</th><th>Price CHF</th><th>Orig CHF</th><th>Email subject</th></tr></thead>
-    <tbody id="tb-o"><tr><td colspan="8" class="empty">No offers yet — data will appear after first Edulis email is processed</td></tr></tbody></table>
+    <table><thead><tr><th>Date</th><th>Wine</th><th>Producer</th><th>Appellation</th><th>Vintage</th><th>Price CHF</th><th>Orig CHF</th><th>Retailer</th></tr></thead>
+    <tbody id="tb-o"><tr><td colspan="8" class="empty">No offers yet — data appears after first Edulis email is processed</td></tr></tbody></table>
   </div>
 </div>
 <script>
@@ -80,7 +82,7 @@ if(P.length)s('tb-p').innerHTML=P.map(r=>{
   return '<tr><td>'+e(r.Order_Date)+'</td><td><b>'+e(r.Wine)+'</b></td><td>'+e(r.Producer)+'</td><td>'+ab(r.Appellation)+'</td><td>'+e(r.Vintage)+'</td><td>'+e(r.Qty_Bottles)+'</td><td class="price">'+e(r.Price_Per_Bottle_CHF)+'</td><td class="price">'+t+'</td><td style="color:#555;font-size:.78rem">'+e(r.Order_Note)+'</td></tr>';
 }).join('');
 if(O.length)s('tb-o').innerHTML=O.map(r=>
-  '<tr><td>'+e(r.Date)+'</td><td><b>'+e(r.Wine)+'</b></td><td>'+e(r.Producer)+'</td><td>'+ab(r.Appellation)+'</td><td>'+e(r.Vintage)+'</td><td class="price">'+e(r.Price_CHF)+'</td><td style="color:#888">'+e(r.Original_Price_CHF)+'</td><td style="color:#555;font-size:.78rem">'+e(r.Email_Subject)+'</td></tr>'
+  '<tr><td>'+e(r.Date)+'</td><td><b>'+e(r.Wine)+'</b></td><td>'+e(r.Producer)+'</td><td>'+ab(r.Appellation)+'</td><td>'+e(r.Vintage)+'</td><td class="price">'+e(r.Price_CHF)+'</td><td style="color:#888">'+e(r.Original_Price_CHF)+'</td><td class="source">'+e(r.Source||'Edulis (edulis.ch)')+'</td></tr>'
 ).join('');
 let cur='purchases';
 function show(tab,btn){
