@@ -1,8 +1,7 @@
-name: Deploy to alceste.ch
+name: Deploy Wine Dashboard
 
 on:
   push:
-    branches: [main]
     paths:
       - 'index.html'
       - 'wine_private.html'
@@ -11,48 +10,63 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTP debug deploy
-        run: |
-          python3 << 'PYEOF'
-          import ftplib, ssl, os
-
-          HOST = os.environ['FTP_HOST']
-          USER = os.environ['FTP_USER']
-          PASS = os.environ['FTP_PASS']
-
-          # Try plain FTP first (no SSL) to isolate SSL issues
-          print("=== Trying plain FTP (no SSL) ===")
-          try:
-              ftp = ftplib.FTP()
-              ftp.set_debuglevel(1)
-              ftp.connect(HOST, 21, timeout=30)
-              ftp.login(USER, PASS)
-              print(f"PWD: {ftp.pwd()}")
-              print(f"LIST root: {ftp.nlst('.')}")
-
-              # Try to create wine dir and upload test file
-              try:
-                  ftp.mkd('wine')
-              except:
-                  pass
-              ftp.cwd('wine')
-              print(f"PWD after cd wine: {ftp.pwd()}")
-              with open('wine_private.html', 'rb') as f:
-                  resp = ftp.storbinary('STOR test_upload.html', f)
-              print(f"STOR response: {resp}")
-              print(f"LIST wine after upload: {ftp.nlst('.')}")
-              ftp.quit()
-              print("Plain FTP: SUCCESS")
-          except Exception as e:
-              print(f"Plain FTP failed: {e}")
-
-          PYEOF
+      - name: Deploy via FTP
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+        run: |
+          python3 << 'PYEOF'
+import ftplib, os
+
+HOST = os.environ['FTP_HOST']
+USER = os.environ['FTP_USER']
+PASS = os.environ['FTP_PASS']
+
+def ensure_dir(ftp, path):
+    parts = [p for p in path.split('/') if p]
+    for part in parts:
+        try:
+            ftp.mkd(part)
+        except:
+            pass
+        ftp.cwd(part)
+
+ftp = ftplib.FTP()
+ftp.connect(HOST, 21, timeout=30)
+ftp.login(USER, PASS)
+
+# Navigate to web root
+ftp.cwd('web')
+
+# Ensure wine/ exists
+try:
+    ftp.mkd('wine')
+except:
+    pass
+
+# Upload public dashboard
+ftp.cwd('wine')
+with open('index.html', 'rb') as f:
+    resp = ftp.storbinary('STOR index.html', f)
+print(f'index.html: {resp}')
+
+# Ensure wine/private/ exists
+try:
+    ftp.mkd('private')
+except:
+    pass
+
+# Upload private dashboard
+ftp.cwd('private')
+with open('wine_private.html', 'rb') as f:
+    resp = ftp.storbinary('STOR index.html', f)
+print(f'wine_private/index.html: {resp}')
+
+ftp.quit()
+print('Done.')
+PYEOF
