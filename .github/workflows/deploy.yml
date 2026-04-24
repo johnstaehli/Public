@@ -16,24 +16,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy public dashboard
+      - name: Prepare deploy folder
         run: |
-          curl -v --ftp-ssl --ftp-create-dirs \
-            -T index.html \
-            "ftp://$FTP_HOST/wine/index.html" \
-            --user "$FTP_USER:$FTP_PASS"
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          mkdir -p _deploy/private
+          cp index.html _deploy/index.html
+          cp wine_private.html _deploy/private/index.html
 
-      - name: Deploy private dashboard
-        run: |
-          curl -v --ftp-ssl --ftp-create-dirs \
-            -T wine_private.html \
-            "ftp://$FTP_HOST/wine/private/index.html" \
-            --user "$FTP_USER:$FTP_PASS"
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+      - name: Deploy to alceste.ch/wine/
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./_deploy/
+          server-dir: ./wine/
+          dangerous-clean-slate: false
