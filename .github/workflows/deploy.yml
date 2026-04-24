@@ -19,30 +19,20 @@ jobs:
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
-      - name: Deploy public dashboard
+      - name: Deploy to alceste.ch/wine/
         run: |
           lftp -e "
             set ftp:ssl-allow yes;
             set ssl:verify-certificate no;
+            set ftp:passive-mode yes;
             open -u $FTP_USER,$FTP_PASS $FTP_HOST;
+            mkdir -p /wine;
+            mkdir -p /wine/private;
             put -O /wine index.html;
-            bye
-          "
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
-
-      - name: Deploy private dashboard
-        run: |
-          lftp -e "
-            set ftp:ssl-allow yes;
-            set ssl:verify-certificate no;
-            open -u $FTP_USER,$FTP_PASS $FTP_HOST;
             put -O /wine/private wine_private.html -o index.html;
             bye
           "
         env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_HOST: ${{ secrets.FTP_HOTT }}
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
